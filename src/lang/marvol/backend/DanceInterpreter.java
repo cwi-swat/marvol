@@ -69,26 +69,58 @@ public class DanceInterpreter {
 	}
 	
 	public static void main(String[] argv){
+		//init("192.16.201.36");
 		init("127.0.0.1");
 		ArrayList<NewPose> p = new ArrayList<NewPose>();
 		NewPose i = NewPose.Init;
-		
 		
 		NewPose rightPoint = i.moveRightArm(ArmPoses.ForwardsUpSideWays).rightElbow(ElbowPoses.Stretch).rightHand(HandPoses.Open).look(HeadHorPoses.Right).chin(HeadVerPoses.Up).moveLeftArm(ArmPoses.ForwardsDownSideWays);
 	
 		
 		NewPose leftFirst = i.moveArms(ArmPoses.Sideways).elbows(ElbowPoses.Bend).twistArms(ArmTwistPoses.Inwards);
-		NewPose leftFirst2 = i.moveArms(ArmPoses.Sideways).elbows(ElbowPoses.Bend).twistLeftArm(ArmTwistPoses.Outwards).leftHand(HandPoses.Open).look(HeadHorPoses.FarLeft).twistRightArm(ArmTwistPoses.FarInwards);
-		NewPose leftFirst3 = leftFirst2.mirror();
-		for(int z = 0 ; z < 3 ; z ++){
-		for (int j = 0 ; j < 2 ; j++){
-		
-			p.add(leftFirst3);
-			p.add(leftFirst2);
+	
+		//NewPose leftFirst3 = leftFirst2.mirror();
+		NewPose maarten = i.moveArms(ArmPoses.Sideways);
+		p.add(i);
+		p.add(i.moveArms(ArmPoses.ForwardsDown).elbows(ElbowPoses.Bend).twistArms(ArmTwistPoses.FarInwards));
+		/*for(int z = 0 ; z < 3 ; z ++){
+			NewPose bla = i.moveLegs(LegPoses.HawaiiLeft).
+					moveRightArm(ArmPoses.Sideways).
+					twistRightArm(ArmTwistPoses.Outwards).rightHand(HandPoses.Open).
+					look(HeadHorPoses.FarRight).
+					moveLeftArm(ArmPoses.Forwards).
+					twistLeftArm(ArmTwistPoses.Inwards).
+					leftElbow(ElbowPoses.Bend);
+		for (int j = 0 ; j < 3 ; j++){
+			p.add(i.moveLegs(LegPoses.LuckyLuke).moveArms(ArmPoses.ForwardsUp).hands(HandPoses.Open));
+			p.add(bla);
+			p.add(i.moveLegs(LegPoses.LuckyLuke).moveArms(ArmPoses.ForwardsUp).hands(HandPoses.Open));
+			p.add(bla.mirror());
 		}
-		for (int j = 0 ; j < 2 ; j++){
-			p.add(rightPoint);
-			p.add(rightPoint.mirror());	
+		
+		for(int q = 0 ; q < 3 ; q++){
+			NewPose leftFirst2 = i.moveArms(ArmPoses.Sideways).elbows(ElbowPoses.Bend).twistLeftArm(ArmTwistPoses.Outwards).leftHand(HandPoses.Open).look(HeadHorPoses.FarLeft).twistRightArm(ArmTwistPoses.FarInwards).moveLegs(LegPoses.HawaiiLeft);
+			p.add(leftFirst2);
+			p.add(leftFirst2.mirror());
+			
+			
+			//p.add(i.moveLegs(LegPoses.HawaiiRight));
+			//p.add(i.moveLegs(LegPoses.Squat));
+			//p.add(i.moveArms(ArmPoses.Down));
+			//p.add(i.moveLegs(LegPoses.Squat).moveArms(ArmPoses.Sideways));
+			//.add(i.moveLegs(LegPoses.Init));
+
+		}
+		
+		
+		}
+		for (int j = 0 ; j < 3 ; j++){
+			NewPose bla = i.moveLegs(LegPoses.Squat).moveLeftArm(ArmPoses.ForwardsUp).moveRightArm(ArmPoses.ForwardsDown).elbows(ElbowPoses.Bend).chin(HeadVerPoses.Up).look(HeadHorPoses.Right);
+			p.add(bla);
+			NewPose fly = i.moveLeftArm(ArmPoses.SidewaysUp).moveRightArm(ArmPoses.SidewaysDown);
+			p.add(fly);	
+			p.add(bla.mirror());
+			p.add(fly.mirror());
 		}
 		NewPose rightHere = i.moveRightArm(ArmPoses.ForwardsDown).rightElbow(ElbowPoses.Bend).rightHand(HandPoses.Closed).look(HeadHorPoses.Right).chin(HeadVerPoses.Down).moveLeftArm(ArmPoses.Sideways).leftElbow(ElbowPoses.Bend);
 		for (int j = 0 ; j < 2 ; j++){
@@ -96,6 +128,7 @@ public class DanceInterpreter {
 			p.add(rightHere.mirror());
 			}
 		}
+		*/
 		asyncDoMove(p);
 		try {
 			curThread.join();

@@ -17,7 +17,7 @@ public class MoveRunnable implements Runnable{
 		@Override
 		public void run() {
 			for(NewPose i : poses){
-				i.goToMe(DanceInterpreter.mp, 1.2f);
+				i.goToMe(DanceInterpreter.mp, 1.75f);
 				if(DanceInterpreter.shouldStop) return;
 			}
 			DanceInterpreter.curThread = null;

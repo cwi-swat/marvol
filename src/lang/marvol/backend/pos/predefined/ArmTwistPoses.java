@@ -8,7 +8,6 @@ public enum ArmTwistPoses {
 	FarInwards(new ArmTwist(0.35f * MPI.pi)),
 	Inwards(new ArmTwist(0.0f)),
 	Outwards(new ArmTwist(-0.5f * MPI.pi));
-
 	ArmTwistPoses(ArmTwist pos){
 		this.pos = pos;
 	}

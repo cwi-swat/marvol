@@ -3,15 +3,15 @@ package lang.marvol.backend.pos;
 public class LegPos {
 
 	
-	final float HipYawPitch,
+	final float AnklePitch, AnkleRoll,
 	HipPitch,
 	HipRoll,
-	KneePitch,
-	AnklePitch,
-	AnkleRoll;
+	HipYawPitch,
+	KneePitch;
 
-	public LegPos(float hipYawPitch, float hipPitch, float hipRoll,
-			float kneePitch, float anklePitch, float ankleRoll) {
+	public LegPos(float anklePitch, float ankleRoll,
+			float hipPitch, float hipRoll, float hipYawPitch, 
+			float kneePitch  ) {
 		HipYawPitch = hipYawPitch;
 		HipPitch = hipPitch;
 		HipRoll = hipRoll;

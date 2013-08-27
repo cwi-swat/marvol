@@ -21,27 +21,26 @@ public class NewPose {
 
 
 	private HandPoses lHand,rHand;
-	private LegPoses lLeg, rLeg;
+	private LegPoses legs;
 	
 	public final static NewPose Init = new NewPose(
 			HeadHorPoses.Forward, 
 			HeadVerPoses.Forward,
 			ElbowPoses.Stretch,
             ElbowPoses.Stretch,
-            ArmPoses.Forwards,
-            ArmPoses.Forwards,
+            ArmPoses.Down,
+            ArmPoses.Down,
             ArmTwistPoses.Inwards,
             ArmTwistPoses.Inwards,
             HandPoses.Closed,
             HandPoses.Closed,
-            LegPoses.Init,
             LegPoses.Init);
 	
 
 	private NewPose(HeadHorPoses hhead, HeadVerPoses vhead, ElbowPoses lElbow,
 			ElbowPoses rElbow, ArmPoses lArm, ArmPoses rArm, 
 			ArmTwistPoses lTwistArm, ArmTwistPoses rTwistArm, HandPoses lHand,
-			HandPoses rHand, LegPoses lLeg, LegPoses rLeg) {
+			HandPoses rHand, LegPoses leg) {
 		this.hhead = hhead;
 		this.vhead = vhead;
 		this.lElbow = lElbow;
@@ -52,8 +51,7 @@ public class NewPose {
 		this.rTwistArm = rTwistArm;
 		this.lHand = lHand;
 		this.rHand = rHand;
-		this.lLeg = lLeg;
-		this.rLeg = rLeg;
+		this.legs = leg;
 	}
 	
 	private NewPose(NewPose p) {
@@ -67,8 +65,7 @@ public class NewPose {
 		this.rTwistArm = p.rTwistArm;
 		this.lHand = p.lHand;
 		this.rHand = p.rHand;
-		this.lLeg = p.lLeg;
-		this.rLeg = p.rLeg;
+		this.legs = p.legs;
 	}
 	
 	public NewPose look(HeadHorPoses p){
@@ -148,20 +145,11 @@ public class NewPose {
 		return moveLeftArm(p).moveRightArm(p);
 	}
 	
-	public NewPose moveLeftLeg(LegPoses p){
-		NewPose x = new NewPose(this);
-		x.lLeg = p ;
-		return x;
-	}
-	
-	public NewPose moveRightLeg(LegPoses p){
-		NewPose x = new NewPose(this);
-		x.rLeg = p ;
-		return x;
-	}
 	
 	public NewPose moveLegs(LegPoses p){
-		return moveLeftLeg(p).moveRightLeg(p);
+		NewPose x = new NewPose(this);
+		x.legs = p ;
+		return x;
 	}
 	
 
@@ -201,14 +189,13 @@ public class NewPose {
 	
 	
 	public NewPose mirror(){
-		return new NewPose(hhead.mirror(),vhead,rElbow,lElbow,rArm,lArm,rTwistArm,lTwistArm,rHand,lHand,rLeg,lLeg);
+		return new NewPose(hhead.mirror(),vhead,rElbow,lElbow,rArm,lArm,rTwistArm,lTwistArm,rHand,lHand,legs.mirror());
 	}
 
 	Variant angles() {
 		ArmPos rArmpos = rArm.pos.mirror();
 		ArmTwist rTwistArmpos = rTwistArm.pos.mirror();
 		ElbowPos rElbowpos = rElbow.pos.mirror();
-		LegPos rLegpos = rLeg.pos.mirror();
 		HandPos rHandpos = rHand.pos.mirror();
 		return new Variant(
 				new float[] {
@@ -222,18 +209,18 @@ public class NewPose {
 						lArm.pos.ShoulderRoll,
 						lTwistArm.pos.ElbowYaw,
 						lElbow.pos.ElbowRoll,
-						lLeg.pos.HipYawPitch,
-						rLegpos.HipYawPitch,
-						rLegpos.HipPitch,
-						rLegpos.HipRoll,
-						lLeg.pos.HipPitch,
-						lLeg.pos.HipRoll,
-						rLegpos.KneePitch,
-						lLeg.pos.KneePitch,
-						rLeg.pos.AnklePitch,
-						rLegpos.AnkleRoll,
-						lLeg.pos.AnklePitch,
-						lLeg.pos.AnkleRoll,
+						legs.posl.HipYawPitch,
+						legs.posr.HipYawPitch,
+						legs.posr.HipPitch,
+						legs.posr.HipRoll,
+						legs.posl.HipPitch,
+						legs.posl.HipRoll,
+						legs.posr.KneePitch,
+						legs.posl.KneePitch,
+						legs.posr.AnklePitch,
+						legs.posr.AnkleRoll,
+						legs.posl.AnklePitch,
+						legs.posl.AnkleRoll,
 						0f,
 						0f,
 						rHandpos.Hand,
