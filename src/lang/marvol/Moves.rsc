@@ -50,9 +50,22 @@ data HandMove
   = Close()
   | Open();
   
-data LegMove 
-  = LegStretch(); // More to come...
+data LegsMove 
+  = LegStretch()
+  | Squat() 
+  | HawaiiLeft()
+  | HawaiiRight()
+  | LuckyLuke(); // More to come...
 
+LegsMove mirror(LegsMove m) {
+  switch(m) {
+    case LegStretch()  : return LegStretch();
+    case Squat()     : return Squat();
+    case HawaiiLeft()  : return HawaiiRight();
+    case LuckyLuke()    : return LuckyLuke();
+    }
+}
+  
   
 data BodyMove = BodyMove(
 	LookMove look, 
@@ -61,20 +74,11 @@ data BodyMove = BodyMove(
 	ArmTwistMove leftArmTwist, ArmTwistMove rightArmTwist,
 	ElbowMove leftElbow, ElbowMove rightElbow,
 	HandMove leftHand, HandMove rightHand,
-	LegMove legLeg, LegMove rightLeg
+	LegMove legs
 	);
 
 
   
-data BodyMove = BodyMove(
-	LookMove look, 
-	ChinMove chin, 
-	ArmMove leftArm, ArmMove rightArm,
-	ArmTwistMove leftArmTwist, ArmTwistMove rightArmTwist,
-	ElbowMove leftElbow, ElbowMove rightElbow,
-	HandMove leftHand, HandMove rightHand,
-	LegMove legLeg, LegMove rightLeg
-	);
 
 
 
@@ -87,7 +91,8 @@ BodyPosition initPos = BodyMove (
    Inwards(), Inwards(),
    Stretch(), Stretch(),
    Close(),   Close(),
-   LegStretch(), LegStretch());
+   LegStretch());
+   
    
    
 BodyPosition mirror(BodyPosition pos) =
@@ -96,9 +101,19 @@ BodyPosition mirror(BodyPosition pos) =
            pos.rightArmTwist, pos.leftArmTwist,
            pos.rightElbow, pos.leftElbow,
            pos.rightHand, pos.leftHand,
-           pos.rightLeg, pos.leftLeg); 
+           mirror(pos.legs)); 
 
-public bool isLegalMove(BodyMove m) = true;
+public bool armIsStraightDown(ArmPos arm, ElbowPos elbow) = (arm == Down() && elbow == Stretch());
+
+public bool armInsideSelf(ArmPos arm, ElbowPos elbow, ArmTwistMove twist) = (arm == Down() && elbow == Bend() && twist != Outwards);
+public bool armIsForward(ArmPos arm) = arm == Forward() || arm == ForwardsUp() || arm == ForwardsDown();
+
+public bool isIllegalMove(BodyMove m) = 
+	(m.legs == Squat() && armIsStraightDown(leftArm,leftElbow) || armIsStraightDown(rightArm,rightElbow)) ||
+	(armForward(m.leftArm) && armIsForward(m.rightArm) && m.leftArm == m.rightArm && m.leftElbow == Bend() && m.rightElbow == Bend() && m.leftArmTwist == Inwards() && m.rightArmTwist == Inwards()) ||
+	armInsideSelf(m.leftArm, m.leftElbow, m.leftArmTwist) || 
+        armInsideSelf(m.rightArm, m.rightElbow, m.rightArmTwist) 
+	;
 public bool isLegalTransition(BodyPosition a, BodyPosition b) = true; 
 
 @javaClass{org.rascalmpl.library.lang.marvol.Moves}
