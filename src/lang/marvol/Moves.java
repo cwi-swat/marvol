@@ -1,10 +1,9 @@
-package lang.marvol;
+package lang.marvol.backend;
 
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import lang.marvol.backend.DanceInterpreter;
 import lang.marvol.backend.pos.HeadVerPos;
 import lang.marvol.backend.pos.NewPose;
 import lang.marvol.backend.pos.predefined.ArmPoses;
@@ -52,7 +51,7 @@ public class Moves {
 		if(c.getName().equals("Left")){
 			return HeadHorPoses.Left;
 		} 
-		if(c.getName().equals("Forward")){
+		if(c.getName().equals("LForward")){
 			return HeadHorPoses.Forward;
 		} 
 		if(c.getName().equals("Right")){
@@ -66,7 +65,7 @@ public class Moves {
 	}
 	
 	HeadVerPoses chinFromR(IConstructor c){
-		if(c.getName().equals("Forward")){
+		if(c.getName().equals("CForward")){
 			return HeadVerPoses.Forward;
 		} 
 		if(c.getName().equals("Up")){
@@ -137,9 +136,21 @@ public class Moves {
 		return null;
 	}
 	
-	LegPoses legFromR(IConstructor c){
-		if(c.getName().equals("Stretch")){
+	LegPoses legsFromR(IConstructor c){
+		if(c.getName().equals("LegStretch")){
 			return LegPoses.Init;
+		} 
+		if(c.getName().equals("Squat")){
+			return LegPoses.Squat;
+		} 
+		if(c.getName().equals("HawaiiLeft")){
+			return LegPoses.HawaiiLeft;
+		} 
+		if(c.getName().equals("HawaiiRight")){
+			return LegPoses.HawaiiRight;
+		} 
+		if(c.getName().equals("LuckyLuke")){
+			return LegPoses.LuckyLuke;
 		} 
 		return null;
 	}
@@ -157,8 +168,7 @@ public class Moves {
 		.rightElbow(elbowFromR((IConstructor)c.get("rightElbow")))
 		.leftHand(handsFromR((IConstructor)c.get("leftHand")))
 		.rightHand(handsFromR((IConstructor)c.get("rightHand")))
-		.moveLeftLeg(legFromR((IConstructor)c.get("leftLeg")))
-		.moveRightLeg(legFromR((IConstructor)c.get("rightLeg")));		
+		.moveLegs(legsFromR((IConstructor)c.get("legs")));		
 				
 	}
 	
