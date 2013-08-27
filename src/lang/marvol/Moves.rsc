@@ -3,12 +3,22 @@ module lang::marvol::Moves
 data LookMove 
   = FarLeft()
   | Left()
-  | Forward()
+  | LForward()
   | Right()
   | FarRight();
   
+LookMove mirror(LookMove m) {
+  switch(m) {
+    case FarLeft()  : return FarRight();
+    case Left()     : return Right();
+    case LForward()  : return LForward();
+    case Right()    : return Left();
+    case FarRight() : return FarLeft();
+    }
+}
+
 data ChinMove
-  = Forward()
+  = CForward()
   | Down()
   | Up();
 
@@ -41,7 +51,7 @@ data HandMove
   | Open();
   
 data LegMove 
-  = Stretch(); // More to come...
+  = LegStretch(); // More to come...
 
   
 data BodyMove = BodyMove(
@@ -66,17 +76,37 @@ data BodyMove = BodyMove(
 	LegMove legLeg, LegMove rightLeg
 	);
 
-type BodyPosition = BodyMove;
+
+
+alias BodyPosition = BodyMove;
+
+BodyPosition initPos = BodyMove (
+   LForward(),
+   CForward(),
+   Down(),    Down(),
+   Inwards(), Inwards(),
+   Stretch(), Stretch(),
+   Close(),   Close(),
+   LegStretch(), LegStretch());
+   
+   
+BodyPosition mirror(BodyPosition pos) =
+  BodyMove( mirror(pos.look) , pos.chin,
+           pos.rightArm, pos.leftArm,
+           pos.rightArmTwist, pos.leftArmTwist,
+           pos.rightElbow, pos.leftElbow,
+           pos.rightHand, pos.leftHand,
+           pos.rightLeg, pos.leftLeg); 
 
 public bool isLegalMove(BodyMove m) = true;
 public bool isLegalTransition(BodyPosition a, BodyPosition b) = true; 
 
-@javaClass{lang.marvol.Moves}
+@javaClass{org.rascalmpl.library.lang.marvol.Moves}
 public java void init(str robotAddr);
 
-@javaClass{lang.marvol.Moves}
+@javaClass{org.rascalmpl.library.lang.marvol.Moves}
 public java void doAsyncDance(list[BodyMove] p);
 
 // blocks until dance is cancelled
-@javaClass{lang.marvol.Moves}
+@javaClass{org.rascalmpl.library.lang.marvol.Moves}
 public java void cancelCurrentDance();
