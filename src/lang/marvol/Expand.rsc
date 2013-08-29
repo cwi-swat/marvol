@@ -5,6 +5,13 @@ import lang::marvol::Utils;
 import ParseTree;
 import util::Math;
 
+/*
+ * Expand expands a program into a flat list of dance statements;
+ * the elements may only consist of:
+ *  - Atomic moves
+ *  - A (possibly nested) zip dance with only atoms as arguments.
+ */
+
 // requires non-recursive and checked.
 list[Dance] expand(Program p) = expand(p.main, getDefinitions(p));
 
