@@ -10,15 +10,17 @@ import util::Math;
  * the elements may only consist of:
  *  - Atomic moves
  *  - A (possibly nested) zip dance with only atoms as arguments.
+ *
+ * NB: this requires that static checker does not return errors
+ * (especially wrt recursion in defs and undefined calls).
  */
 
-// requires non-recursive and checked.
 list[Dance] expand(Program p) = expand(p.main, getDefinitions(p));
 
 list[Dance] expand(d:(Dance)`zip <Dance d1> and <Dance d2>`, map[Id, Dance] defs)
   = [ (Dance)`zip <Dance e1> and <Dance e2>` | <e1, e2> <- zip(es1[0..l], es2[0..l]) ]
   when 
-    l := length(d, defs),
+    l := length(d, defs), // length of zip is minimum of length of d1 and d2
     es1 := expand(d1, defs),
     es2 := expand(d2, defs);  
 

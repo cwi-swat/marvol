@@ -95,6 +95,12 @@ set[Message] undefinedDefs(Program p) {
             | /(Dance)`@<Id b>;` := p, b notin ds };
 }
 
+set[Message] unusedDefs(Program p) {
+ ds = getDefinitions(p);
+ calls = { x | /(Dance)`@<Id x>;` := p };
+ return { warning("Unused definition", d@\loc) | d <- ds, d notin calls };
+}
+
 set[Message] zipLengths(Program p) {
  defs = getDefinitions(p);
  errs = {};
