@@ -74,7 +74,7 @@ data BodyMove = BodyMove(
 	ArmTwistMove leftArmTwist, ArmTwistMove rightArmTwist,
 	ElbowMove leftElbow, ElbowMove rightElbow,
 	HandMove leftHand, HandMove rightHand,
-	LegMove legs
+	LegsMove legs
 	);
 
 
@@ -103,10 +103,10 @@ BodyPosition mirror(BodyPosition pos) =
            pos.rightHand, pos.leftHand,
            mirror(pos.legs)); 
 
-public bool armIsStraightDown(ArmPos arm, ElbowPos elbow) = (arm == Down() && elbow == Stretch());
+public bool armIsStraightDown(ArmMove arm, ElbowMove elbow) = (arm == Down() && elbow == Stretch());
 
-public bool armInsideSelf(ArmPos arm, ElbowPos elbow, ArmTwistMove twist) = (arm == Down() && elbow == Bend() && twist != Outwards);
-public bool armIsForward(ArmPos arm) = arm == Forward() || arm == ForwardsUp() || arm == ForwardsDown();
+public bool armInsideSelf(ArmMove arm, ElbowMove elbow, ArmTwistMove twist) = (arm == Down() && elbow == Bend() && twist != Outwards);
+public bool armIsForward(ArmMove arm) = arm == Forward() || arm == ForwardsUp() || arm == ForwardsDown();
 
 public bool isIllegalMove(BodyMove m) = 
 	(m.legs == Squat() && armIsStraightDown(leftArm,leftElbow) || armIsStraightDown(rightArm,rightElbow)) ||
@@ -116,12 +116,12 @@ public bool isIllegalMove(BodyMove m) =
 	;
 public bool isLegalTransition(BodyPosition a, BodyPosition b) = true; 
 
-@javaClass{org.rascalmpl.library.lang.marvol.backend.Moves}
+@javaClass{lang.marvol.backend.Moves}
 public java void init(str robotAddr);
 
-@javaClass{org.rascalmpl.library.lang.marvol.backend.Moves}
+@javaClass{lang.marvol.backend.Moves}
 public java void doAsyncDance(list[BodyMove] p);
 
 // blocks until dance is cancelled
-@javaClass{org.rascalmpl.library.lang.marvol.backend.Moves}
+@javaClass{lang.marvol.backend.Moves}
 public java void cancelCurrentDance();
