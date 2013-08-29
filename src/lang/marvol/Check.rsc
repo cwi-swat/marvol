@@ -109,7 +109,8 @@ set[Message] zipLengths(Program p) {
 
 
 set[Message] zeroRepeats(Program p)
-  = { warning("Empty repetition", r@\loc) | /r:(Dance)`repeat 0 <Dance _>` := p };
+  = { warning("Empty repetition", r@\loc) 
+       | /r:(Dance)`repeat 0 <Dance _>` := p };
          
 
 set[Message] check(d:(Dance)`<Part p> <Move+ ms>;`) = 

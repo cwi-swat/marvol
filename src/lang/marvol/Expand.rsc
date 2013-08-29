@@ -15,7 +15,11 @@ list[Dance] expand(d:(Dance)`zip <Dance d1> and <Dance d2>`, map[Id, Dance] defs
     es1 := expand(d1, defs),
     es2 := expand(d2, defs);  
 
-list[Dance] expand((Dance)`@<Id x>;`, map[Id,Dance] defs) = defs[x];
+list[Dance] expand((Dance)`@<Id x>;`, map[Id,Dance] defs) 
+  = expand(defs[x], defs);
+
+list[Dance] expand((Dance)`{<Dance* ds>}`, map[Id,Dance] defs) 
+  = ( [] | it + expand(d) | d <- ds );
 
 list[Dance] expand((Dance)`repeat <Nat n> <Dance d>`, map[Id,Dance] defs) 
   = ( [] | it + expand(d) | i <- [0..toInt("<n>")] );
