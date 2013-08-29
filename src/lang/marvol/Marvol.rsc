@@ -9,8 +9,9 @@ start syntax Program = Definition* Dance?;
 syntax Definition = Id "=" Dance ".";
 
 syntax Dance
-  = Action action Double duration
-  | "rest" Double duration
+  = Action action Nat beats
+  | Action action
+  | "rest" Nat beats
   | "with" Part Dance
   | {Dance "|"}+ 
   | "{" {Dance ";"}* "}"

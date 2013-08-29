@@ -116,12 +116,12 @@ public bool isIllegalMove(BodyMove m) =
 	;
 public bool isLegalTransition(BodyPosition a, BodyPosition b) = true; 
 
-@javaClass{org.rascalmpl.library.lang.marvol.Moves}
+@javaClass{org.rascalmpl.library.lang.marvol.backend.Moves}
 public java void init(str robotAddr);
 
-@javaClass{org.rascalmpl.library.lang.marvol.Moves}
+@javaClass{org.rascalmpl.library.lang.marvol.backend.Moves}
 public java void doAsyncDance(list[BodyMove] p);
 
 // blocks until dance is cancelled
-@javaClass{org.rascalmpl.library.lang.marvol.Moves}
+@javaClass{org.rascalmpl.library.lang.marvol.backend.Moves}
 public java void cancelCurrentDance();

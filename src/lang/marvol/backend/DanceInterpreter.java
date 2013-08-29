@@ -1,25 +1,17 @@
 package lang.marvol.backend;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
-import javax.naming.InitialContext;
-
-import lang.marvol.backend.pos.ArmPos;
-import lang.marvol.backend.pos.HeadHorPos;
 import lang.marvol.backend.pos.NewPose;
-import lang.marvol.backend.pos.WristPos;
 import lang.marvol.backend.pos.predefined.ArmPoses;
 import lang.marvol.backend.pos.predefined.ArmTwistPoses;
 import lang.marvol.backend.pos.predefined.ElbowPoses;
 import lang.marvol.backend.pos.predefined.HandPoses;
 import lang.marvol.backend.pos.predefined.HeadHorPoses;
 import lang.marvol.backend.pos.predefined.HeadVerPoses;
-import lang.marvol.backend.pos.predefined.LegPoses;
 
-
-
-import com.aldebaran.proxy.*;
+import com.aldebaran.proxy.ALMotionProxy;
+import com.aldebaran.proxy.Variant;
 
 public class DanceInterpreter {
 
