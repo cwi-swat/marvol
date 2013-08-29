@@ -8,15 +8,6 @@ start syntax Program = Definition* Dance;
 
 syntax Definition = "def" Id name "=" Dance dance ".";
 
-syntax Part
-  = "arm"
-  | "leg"
-  | "elbow"
-  | "hand"
-  | "chin"
-  | "look"
-  ;
-
 syntax Dance
   = Part Move+ ";"
   | "repeat" Nat Dance
@@ -24,6 +15,15 @@ syntax Dance
   | "mirror" Dance
   | "zip" Dance "and" Dance
   | "@" Id ";"
+  ;
+
+syntax Part
+  = "arm"
+  | "leg"
+  | "elbow"
+  | "hand"
+  | "chin"
+  | "look"
   ;
   
 syntax Move
@@ -39,11 +39,9 @@ syntax Move
   | "sideways"
   | "inwards"
   | "outwards"
-  | "far" "left"
   | "left"
-  | "forward"
   | "right"
-  | "far" "right"
+  | "forward"
   | "squat" 
   | "luckyluke" 
   ;

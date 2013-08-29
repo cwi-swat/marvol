@@ -9,6 +9,8 @@ import Relation;
  * - Recursion
  * - Duplicate defs
  * - Undefined calls
+ * - Valid combinations of part/move
+ * - Zip args should be equal length
  */
 
 rel[str, str] PART_MOVES = {
@@ -88,7 +90,7 @@ set[Messages] duplicateDefs(Program p) {
 }
 
 set[Message] undefinedDefs(Program p) {
-  ds = { d.name | /Definition d := p };
+  ds = getDefinitions(p);
   return { error("Undefined dance", b@\loc) 
             | /(Dance)`@<Id b>;` := p, b notin ds };
 }
@@ -98,7 +100,7 @@ set[Message] zeroRepeats(Program p)
          
 
 set[Message] check(d:(Dance)`<Part p> <Move+ ms>;`) = 
-  { error("Part/move combination", d@\loc) 
+  { error("Invalid part/move combination", d@\loc) 
      | <"<p>", { "<m>" | m <- ms }> notin PART_MOVES };
      
 set[Messages] check((Dance)`repeat <Nat _> <Dance d>`) = check(d);
