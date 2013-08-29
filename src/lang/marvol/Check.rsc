@@ -95,6 +95,19 @@ set[Message] undefinedDefs(Program p) {
             | /(Dance)`@<Id b>;` := p, b notin ds };
 }
 
+set[Message] zipLengths(Program p) {
+ defs = getDefinitions(p);
+ errs = {};
+ visit (p) {
+   case d:(Dance)`zip <Dance d1> and <Dance d2>`:
+     if (length(d1, defs) != length(d2, defs)) {
+       errs += {warning("Zipped dances are not of equal length", d.args[0]@\loc)};
+     }
+ }
+ return errs;
+}
+
+
 set[Message] zeroRepeats(Program p)
   = { warning("Empty repetition", r@\loc) | /r:(Dance)`repeat 0 <Dance _>` := p };
          
@@ -110,7 +123,7 @@ set[Messages] check((Dance)`{<Dance* ds>}`) =
   
 set[Messages] check((Dance)`mirror <Dance d>`) = check(d);
 
-set[Messages] check((Dance)`zip <Dance d1> and <Dance d2>`) 
+set[Messages] check(d:(Dance)`zip <Dance d1> and <Dance d2>`) 
   = check(d1) + check(d2);
  
      
