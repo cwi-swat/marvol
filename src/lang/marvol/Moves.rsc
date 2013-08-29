@@ -11,7 +11,7 @@ LookMove mirror(LookMove m) {
   switch(m) {
     case FarLeft()  : return FarRight();
     case Left()     : return Right();
-    case LForward()  : return LForward();
+    case LForward() : return LForward();
     case Right()    : return Left();
     case FarRight() : return FarLeft();
     }

@@ -4,19 +4,48 @@ extend lang::std::Whitespace;
 extend lang::std::Layout;
 extend lang::std::Comment;
 
-start syntax Program = Definition* Dance?; 
+start syntax Program = Definition* Dance; 
 
-syntax Definition = Id "=" Dance ".";
+syntax Definition = "def" Id name "=" Dance dance ".";
+
+syntax Part
+  = "arm"
+  | "leg"
+  | "elbow"
+  | "hand"
+  | "chin"
+  | "look"
+  ;
 
 syntax Dance
-  = Action action Nat beats
-  | Action action
-  | "rest" Nat beats
-  | "with" Part Dance
-  | {Dance "|"}+ 
-  | "{" {Dance ";"}* "}"
+  = Part Move+ ";"
   | "repeat" Nat Dance
-  | Id
+  | "{" Dance* "}"
+  | "mirror" Dance
+  | "zip" Dance "and" Dance
+  | "@" Id ";"
+  ;
+  
+syntax Move
+  = "up"
+  | "down"
+  | "twist"
+  | "bend"
+  | "stretch"
+  | "close"
+  | "open"
+  | "far"
+  | "forwards"
+  | "sideways"
+  | "inwards"
+  | "outwards"
+  | "far" "left"
+  | "left"
+  | "forward"
+  | "right"
+  | "far" "right"
+  | "squat" 
+  | "luckyluke" 
   ;
 
 keyword Reserved = ;
@@ -24,35 +53,3 @@ keyword Reserved = ;
 lexical Id = ([a-zA-Z_] !<< [a-zA-Z_][a-zA-Z0-9_]* !>> [a-zA-Z0-9_]) \ Reserved;
 
 lexical Nat = [0-9]+ !>> [0-9];
-
-syntax Direction
- = "left"
- | "right"
- | "forward"
- | "backward"
- | "center"
- | "lfd"
- | "lbd"
- | "rfd"
- | "rbd"
- ;
- 
-syntax Level = "low" | "mid" | "high";
-    
-lexical Double = [0-9]+ "." [0-9]+ !>> [0-9];
-  
-syntax Action
-  = "move" Direction Level
-  | "turn" Direction
-  ;
-  
-  
-syntax Part
-  = Side Limb
-  | "head"
-  | "torso"
-  ;
-  
-syntax Side = "left" | "right";
-syntax Part = "foot" | "hand";
-
