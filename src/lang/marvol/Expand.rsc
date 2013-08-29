@@ -10,6 +10,7 @@ import util::Math;
  * the elements may only consist of:
  *  - Atomic moves
  *  - A (possibly nested) zip dance with only atoms as arguments.
+ *  - A mirrored atomic move.
  *
  * NB: this requires that static checker does not return errors
  * (especially wrt recursion in defs and undefined calls).
@@ -32,6 +33,9 @@ list[Dance] expand((Dance)`{<Dance* ds>}`, map[Id,Dance] defs)
 
 list[Dance] expand((Dance)`repeat <Nat n> <Dance d>`, map[Id,Dance] defs) 
   = ( [] | it + expand(d) | i <- [0..toInt("<n>")] );
+
+list[Dance] expand((Dance)`mirror <Dance d>`, map[Id,Dance] defs)
+  = [ (Dance)`mirror <Dance e>` | e <- expand(d, defs) ];
 
 default list[Dance] expand(Dance d, map[Id,Dance] defs) = [d];
 
