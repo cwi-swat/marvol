@@ -4,7 +4,7 @@ extend lang::std::Whitespace;
 extend lang::std::Layout;
 extend lang::std::Comment;
 
-start syntax Program = Definition* Dance; 
+start syntax Program = Definition* defs Dance main; 
 
 syntax Definition = "def" Id name "=" Dance dance ".";
 
