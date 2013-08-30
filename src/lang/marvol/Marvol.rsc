@@ -6,15 +6,17 @@ extend lang::std::Comment;
 
 start syntax Program = Definition* defs Dance main; 
 
-syntax Definition = "def" Id name "=" Dance dance ".";
+syntax Definition = "def" Id name "=" Dance dance "end";
 
 syntax Dance
   = Part Move+ ";"
   | "repeat" Nat Dance
+  | "backforth" Nat Dance
   | "{" Dance* "}"
   | "mirror" Dance
-  | "zip" Dance "and" Dance
+  | "|" Dance* "|" 
   | "@" Id ";"
+  | "nop" ";"
   ;
 
 syntax Part

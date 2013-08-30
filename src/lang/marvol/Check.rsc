@@ -4,6 +4,7 @@ import lang::marvol::Marvol;
 import lang::marvol::Utils;
 import Message;
 import Relation;
+import ParseTree;
 
 /* To check
  * - Recursion
@@ -13,7 +14,7 @@ import Relation;
  * - Zip args should be equal length
  */
 
-rel[str, str] PART_MOVES = {
+rel[str, set[str]] PART_MOVES = {
   <"arm", {"right", "up"}>,
   <"arm", {"right", "down"}>,
   <"arm", {"right", "forwards"}>,
@@ -69,15 +70,25 @@ rel[str, str] PART_MOVES = {
   <"look", {"forward"}>
 };
 
+set[Message] checkMarvol(Program p) {
+  errs = detectRecursion(p);
+  errs += duplicateDefs(p);
+  errs += undefinedDefs(p);
+  errs += unusedDefs(p);
+  errs += zeroRepeats(p);
+  errs += checkDances(p);
+  return errs;
+}
+
 set[Message] detectRecursion(Program p) {
-  ds = getDefinitions(p);
+  ds = getDefs(p);
   deps = { <a, b> | a <- ds, /(Dance)`@<Id b>;` := ds[a] };
   depsTr = deps+;
   return { error("Recursion", a@\loc) | <a, b> <- deps, a in depsTr[a] }; 
 }
 
 
-set[Messages] duplicateDefs(Program p) {
+set[Message] duplicateDefs(Program p) {
   seen = {};
   errs = {};
   for (/Definition d := p) {
@@ -90,49 +101,41 @@ set[Messages] duplicateDefs(Program p) {
 }
 
 set[Message] undefinedDefs(Program p) {
-  ds = getDefinitions(p);
+  ds = getDefs(p);
   return { error("Undefined dance", b@\loc) 
             | /(Dance)`@<Id b>;` := p, b notin ds };
 }
 
 set[Message] unusedDefs(Program p) {
- ds = getDefinitions(p);
+ ds = getDefs(p);
  calls = { x | /(Dance)`@<Id x>;` := p };
  return { warning("Unused definition", d@\loc) | d <- ds, d notin calls };
 }
-
-set[Message] zipLengths(Program p) {
- defs = getDefinitions(p);
- errs = {};
- visit (p) {
-   case d:(Dance)`zip <Dance d1> and <Dance d2>`:
-     if (length(d1, defs) != length(d2, defs)) {
-       errs += {warning("Zipped dances are not of equal length", d.args[0]@\loc)};
-     }
- }
- return errs;
-}
-
 
 set[Message] zeroRepeats(Program p)
   = { warning("Empty repetition", r@\loc) 
        | /r:(Dance)`repeat 0 <Dance _>` := p };
          
 
+
+set[Message] checkDances(Program p) = ( {} | it + check(d) | /Dance d := p );
+
 set[Message] check(d:(Dance)`<Part p> <Move+ ms>;`) = 
   { error("Invalid part/move combination", d@\loc) 
      | <"<p>", { "<m>" | m <- ms }> notin PART_MOVES };
      
-set[Messages] check((Dance)`repeat <Nat _> <Dance d>`) = check(d);
+set[Message] check((Dance)`repeat <Nat _> <Dance d>`) = check(d);
 
-set[Messages] check((Dance)`{<Dance* ds>}`) = 
+set[Message] check((Dance)`backforth <Nat _> <Dance d>`) = check(d);
+
+set[Message] check((Dance)`{<Dance* ds>}`) = 
   ( {} | it + check(d) | d <- ds );
-  
-set[Messages] check((Dance)`mirror <Dance d>`) = check(d);
 
-set[Messages] check(d:(Dance)`zip <Dance d1> and <Dance d2>`) 
-  = check(d1) + check(d2);
- 
-     
+set[Message] check(d:(Dance)`|<Dance* ds>|`) 
+  = ( {} | it + check(d) | d <- ds );
+  
+set[Message] check((Dance)`mirror <Dance d>`) = check(d);
+
+default set[Message] check(Dance _) = {};     
 
 
