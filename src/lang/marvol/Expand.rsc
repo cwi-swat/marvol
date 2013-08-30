@@ -4,6 +4,9 @@ extend lang::marvol::Marvol;
 import lang::marvol::Utils;
 import ParseTree;
 import util::Math;
+import List;
+import IO;
+import String;
 
 /*
  * Expand expands a program into a flat list of dance statements;
@@ -17,39 +20,65 @@ import util::Math;
  * (especially wrt recursion in defs and undefined calls).
  */
 
-list[Dance] expand(Program p) = expand(p.main, getDefinitions(p));
+list[Dance] expand(Program p) = expand(p.main, getDefs(p));
 
 list[Dance] expand(d:(Dance)`|<Dance* ds>|`, map[Id, Dance] defs) {
+  println("Expanding parallel merge");
   l = length(d, defs);
-  ess = [ expand(d, defs) | d <- ds ];
+  println("length = <l>");
+  ess = [ expand(d2, defs) | d2 <- ds ];
+  println("ESS = <ess>");
+  for (e <- ess) println("e = <intercalate(", ", e)>");
   return for (i <- [0..l]) {
-    elts = for (j <- [0..size(ess)]) {
+    list[Dance] elts = [];
+    for (j <- [0..size(ess)]) {
       if (i < size(ess[j])) {
-        append ess[j][i];
+        println("Appending <ess[j][i]>");
+        elts += [ess[j][i]];
       }
       else {
-        append (Dance)`nop;`;
+        println("Appending nop");
+        elts += [(Dance)`nop;`];
       }
     }
+    println("Elts: ");
+    for (x <- elts) println(x);
     append makePar(elts);
   }
 }
 
-Dance makePar([]) = (Dance)`||`;
-Dance makePar([Dance d, Dance *ds]) = (Dance)`|<Dance d> <Dance* dss>|`
-  when (Dance)`|<Dance* dss>|` := makePar(ds);
+//Dance makePar([]) = (Dance)`||`;
+//Dance makePar([Dance d, *list[Dance] ds]) = (Dance)`|<Dance d> <Dance* dss>|`
+//  when (Dance)`|<Dance* dss>|` := makePar(ds);
+
+Dance makePar(list[Dance] ds) {
+  if (ds == []) {
+    return (Dance)`||`;
+  }
+  if ((Dance)`|<Dance* dss>|` := makePar(tail(ds))) {
+    Dance d = ds[0];
+    return (Dance)`|<Dance d> <Dance* dss>|`;
+  }
+  throw "Should not happen";
+}
 
 list[Dance] expand((Dance)`@<Id x>;`, map[Id,Dance] defs) 
   = expand(defs[x], defs);
 
 list[Dance] expand((Dance)`{<Dance* ds>}`, map[Id,Dance] defs) 
-  = ( [] | it + expand(d) | d <- ds );
+  = ( [] | it + expand(d, defs) | d <- ds );
 
 list[Dance] expand((Dance)`repeat <Nat n> <Dance d>`, map[Id,Dance] defs) 
-  = ( [] | it + expand(d) | i <- [0..toInt("<n>")] );
+  = ( [] | it + expand(d, defs) | i <- [0..toInt("<n>")] );
 
 list[Dance] expand((Dance)`backforth <Nat n> <Dance d>`, map[Id,Dance] defs) 
-  = ( [] | it + expand(d) + reverse(expand(d))[1..] | i <- [0..toInt("<n>")] );
+  = ( [] | it + backForth(d, defs) | i <- [0..toInt("<n>")] );
+  
+list[Dance] backForth(Dance d, map[Id, Dance] defs) {
+  ds = expand(d, defs);
+  ds += tail(reverse(ds));
+  return ds;
+}
 
 list[Dance] expand((Dance)`mirror <Dance d>`, map[Id,Dance] defs)
   = [ (Dance)`mirror <Dance e>` | e <- expand(d, defs) ];

@@ -3,6 +3,7 @@ module lang::marvol::Utils
 import lang::marvol::Marvol;
 import util::Math;
 import List;
+import String;
 
 map[Id, Dance] getDefs(Program p) 
   = ( x: d | /(Definition)`def <Id x> = <Dance d> end` := p );
@@ -19,7 +20,7 @@ int length((Dance)`repeat <Nat n> <Dance d>`, map[Id, Dance] defs)
   = toInt("<n>") * length(d, defs);
 
 int length((Dance)`backforth <Nat n> <Dance d>`, map[Id, Dance] defs) 
-  = 2 * toInt("<n>") * length(d, defs) - 1;
+  = toInt("<n>") * (2 * length(d, defs) - 1);
   
 int length((Dance)`mirror <Dance d>`, map[Id, Dance] defs) = length(d, defs);
   

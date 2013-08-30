@@ -26,11 +26,9 @@ void setup() {
 // bug, need start[Program]
 Tree crossRef(Tree p) {
   ds = ( d.name: d.name | /Definition d := p );
-  println("DS = ");
-  iprintln(ds);
   return visit (p) {
 //    case d:(Dance)`@<Id x>;` => d[@link=ds[x]@\loc]
     case Dance d => d[@link=ds[d.name]@\loc]
-      when d is call, d.name in ds, bprintln("Annotating")
+      when d is call, d.name in ds
   }
 }

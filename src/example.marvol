@@ -2,8 +2,11 @@
 def bla = {
     arm right down;
     | 
-      arm left up;
-      leg luckyluke;
+      backforth 4 { arm left up; arm right down; }
+      {
+        leg luckyluke;
+        look forward;
+      }
     |
   }
 end
