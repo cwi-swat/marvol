@@ -12,10 +12,10 @@ syntax Dance
   = Part Move+ ";"
   | "repeat" Nat Dance
   | "backforth" Nat Dance
-  | "{" Dance* "}"
+  | @Foldable "{" Dance* "}"
+  | @Foldable "|" Dance* "|" 
   | "mirror" Dance
-  | "|" Dance* "|" 
-  | "@" Id ";"
+  | call: "@" Id name ";"
   | "nop" ";"
   ;
 
@@ -29,23 +29,23 @@ syntax Part
   ;
   
 syntax Move
-  = "up"
-  | "down"
-  | "twist"
-  | "bend"
-  | "stretch"
-  | "close"
-  | "open"
-  | "far"
-  | "forwards"
-  | "sideways"
-  | "inwards"
-  | "outwards"
-  | "left"
-  | "right"
-  | "forward"
-  | "squat" 
-  | "luckyluke" 
+  = @category="Constant" "up"
+  | @category="Constant" "down"
+  | @category="Constant" "twist"
+  | @category="Constant" "bend"
+  | @category="Constant" "stretch"
+  | @category="Constant" "close"
+  | @category="Constant" "open"
+  | @category="Constant" "far"
+  | @category="Constant" "forwards"
+  | @category="Constant" "sideways"
+  | @category="Constant" "inwards"
+  | @category="Constant" "outwards"
+  | @category="Constant" "left"
+  | @category="Constant" "right"
+  | @category="Constant" "forward"
+  | @category="Constant" "squat" 
+  | @category="Constant" "luckyluke" 
   ;
 
 keyword Reserved = ;

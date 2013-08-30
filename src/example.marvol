@@ -1,6 +1,11 @@
 
-def bla =
-  arm left up;
-.
+def bla = {
+    arm right down;
+    | 
+      arm left up;
+      leg luckyluke;
+    |
+  }
+end
 
 @bla;
