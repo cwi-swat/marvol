@@ -21,14 +21,15 @@ tuple[set[Message], list[BodyMove]] compile(list[Dance] ds) {
   errs = {};
   for (d <- ds) {
     ms = toMoves(d);
+    println("MOVES = <ms>");
     if (hasConflicts(ms)) {
       errs += {warning("Conflicting directions", d@\loc)};
     }
     else if (isIllegal(ms)) {
       errs += {warning("Illegal move combination", d@\loc)};
     }
-    else {
-      cur = ( cur | compile(m.part, m.moves, cur) | m <- ms );
+    else if (ms != {}) {
+      cur = ( cur | compile(m.part, m.moves, it) | m <- ms );
       lst += [cur];
     }
   }
@@ -80,12 +81,6 @@ default bool anyArmInsideSelf(set[Move] _) = false;
 bool armIsForwards({<"arm", ms>, <"elbow", {"stretch", *_}>, *_}) 
   = "forward" in ms;
 
-bool isIllegal(set[Move] ms) = anyArmStraightDown(ms)
-  when <"legs", {"squat"}> in ms;
-
-bool isIllegal(set[Move] ms) = anyArmInsideSelf(ms)
-  when bprintln("MS = <ms>");
-
 bool isIllegal({
   <"arm", {"left", "forwards", "twist", "inwards", *_}>,
   <"arm", {"right", "forwards", "twist", "inwards", *_}>,
@@ -93,7 +88,9 @@ bool isIllegal({
   <"elbow", {"right", "bend", *_}>
 }) = true;
 
-default bool isIllegal(set[Move] _) = false;
+default bool isIllegal(set[Move] ms) = 
+  (anyArmStraightDown(ms) && <"legs", {"squat"}> in ms)
+  || anyArmInsideSelf(ms);
     
     
 bool hasConflicts({<"arm", {str x, *_}>, <"arm", {x, *_}>, *_}) = true; 

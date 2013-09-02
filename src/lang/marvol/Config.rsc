@@ -1,6 +1,6 @@
 module lang::marvol::Config
 
-rel[str, set[str]] PART_MOVES = {
+public rel[str, set[str]] PART_MOVES = {
   <"arm", {"right", "up"}>,
   <"arm", {"right", "down"}>,
   <"arm", {"right", "forwards"}>,
