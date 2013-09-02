@@ -4,6 +4,7 @@ import util::IDE;
 import ParseTree;
 import lang::marvol::Marvol;
 import lang::marvol::Check;
+import lang::marvol::Expand;
 import Message;
 import IO;
 
@@ -19,6 +20,29 @@ void setup() {
          return input[@messages=checkMarvol(p)];
        }
        return {error("Invalid tree", input@\loc)};
+     }),
+     popup(menu("Marvol", 
+        [
+          edit("Normalize", str (Tree input, loc selection) {
+            if (Program p := input.top) {
+             return unparse(expandToSource(p));
+            }
+            return unparse(input);
+          })
+        ])),
+        
+     builder(set[Message] ((&T<:Tree) tree) {
+        if (Program p := tree.top) {
+          src = unparse(expandToSource(p));
+          f = p@\loc;
+          if (/^<fname:.*>\.marvol$/ := f.path) {
+            f.path = "<fname>-normalized.marvol";
+            writeFile(f, src);
+            return {};
+          }
+          return {error("Could not obtain filename", tree@\loc)};
+        }
+        return {error("Not a Marvol program", tree@\loc)};
      })
   });
 }
