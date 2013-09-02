@@ -21,7 +21,7 @@ int length((Dance)`repeat <Nat n> <Dance d>`, map[Id, Dance] defs)
   = toInt("<n>") * length(d, defs);
 
 int length((Dance)`backforth <Nat n> <Dance d>`, map[Id, Dance] defs) 
-  = toInt("<n>") * (2 * length(d, defs) - 1);
+  = toInt("<n>") * 2 *  (length(d, defs) - 1) + 1;
   
 int length((Dance)`mirror <Dance d>`, map[Id, Dance] defs) = length(d, defs);
   

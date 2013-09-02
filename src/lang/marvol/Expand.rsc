@@ -75,11 +75,15 @@ list[Dance] expand((Dance)`{<Dance* ds>}`, map[Id,Dance] defs)
 list[Dance] expand((Dance)`repeat <Nat n> <Dance d>`, map[Id,Dance] defs) 
   = ( [] | it + expand(d, defs) | i <- [0..toInt("<n>")] );
 
-list[Dance] expand((Dance)`backforth <Nat n> <Dance d>`, map[Id,Dance] defs) 
-  = ( [] | it + backForth(d, defs) | i <- [0..toInt("<n>")] );
-  
+list[Dance] expand((Dance)`backforth <Nat n> <Dance d>`, map[Id,Dance] defs) {
+    ds = expand(d, defs);
+    forward = ds[0..-1];
+    backward = reverse(ds[1..]);
+    return ( [] | it + forward + backward | i <- [0..toInt("<n>")] ) + [head(ds)];
+    }
+    	
 list[Dance] backForth(Dance d, map[Id, Dance] defs) {
-  ds = expand(d, defs);
+
   ds += tail(reverse(ds));
   return ds;
 }

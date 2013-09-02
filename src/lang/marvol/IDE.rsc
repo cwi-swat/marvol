@@ -5,6 +5,8 @@ import ParseTree;
 import lang::marvol::Marvol;
 import lang::marvol::Check;
 import lang::marvol::Expand;
+import lang::marvol::Compile;
+import lang::marvol::Moves;
 import Message;
 import IO;
 
@@ -28,7 +30,23 @@ void setup() {
              return unparse(expandToSource(p));
             }
             return unparse(input);
+          }),
+          
+          action("Dance!", void (Tree tree, loc selection) {
+            if (Program p := tree.top) {
+              moves = compile(expand(p));
+              f = p@\loc;
+              if (/^<fname:.*>\.marvol$/ := f.path) {
+                f.path = "<fname>.compiled";
+                writeFile(f, "MOVES\n");          
+                for (m <- moves[1]) {
+                  appendToFile(f, "<m>\n");
+                }
+              }
+              doAsyncDance(moves[1]);
+            }
           })
+          
         ])),
         
      builder(set[Message] ((&T<:Tree) tree) {

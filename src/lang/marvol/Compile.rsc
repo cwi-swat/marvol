@@ -14,30 +14,33 @@ Plan: compile = expand and then for each element in the list
 
 /* Assumes expansion */
 
+alias Move = tuple[str part, set[str] moves];
+
+
 
 tuple[set[Message], list[BodyMove]] compile(list[Dance] ds) {
-  cur = INIT_POS;
+
   lst = [];
   errs = {};
   for (d <- ds) {
     ms = toMoves(d);
-    if (hasConflicts(ms)) {
-      errs += {warning("Conflicting directions", d@\loc)};
-    }
-    else if (isIllegal(ms)) {
-      errs += {warning("Illegal move combination", d@\loc)};
-    }
-    else {
-      cur = ( cur | compile(m.part, m.moves, cur) | m <- ms );
+    //if (hasConflicts(ms)) {
+    //  errs += {warning("Conflicting directions", d@\loc)};
+    //}
+    //else if (isIllegal(ms)) {
+    //  errs += {warning("Illegal move combination", d@\loc)};
+    //}
+    //else {
+      cur = INIT_POS;
+      cur = ( cur | compile(m.part, m.moves, it) | m <- ms, bprintln("M = <m>") );
+      iprintln(cur);
       lst += [cur];
-    }
+    //}
   }
   return <errs, lst>;
 }
 
      
-alias Move = tuple[str part, set[str] moves];
-
 
 set[Move] toMoves((Dance)`nop;`) = {};
      
@@ -82,10 +85,7 @@ bool armIsForwards({<"arm", ms>, <"elbow", {"stretch", *_}>, *_})
 
 bool isIllegal(set[Move] ms) = anyArmStraightDown(ms)
   when <"legs", {"squat"}> in ms;
-
-bool isIllegal(set[Move] ms) = anyArmInsideSelf(ms)
-  when bprintln("MS = <ms>");
-
+  
 bool isIllegal({
   <"arm", {"left", "forwards", "twist", "inwards", *_}>,
   <"arm", {"right", "forwards", "twist", "inwards", *_}>,
@@ -113,10 +113,10 @@ BodyMove compile("arm", {"right", "down"} , BodyMove m) = m[rightArm=Down()];
 BodyMove compile("arm", {"right", "forwards"} , BodyMove m) = m[rightArm=Forwards()];
 BodyMove compile("arm", {"right", "forwards", "up"} , BodyMove m) = m[rightArm=ForwardsUp()];
 BodyMove compile("arm", {"right", "forwards", "down"} , BodyMove m) = m[rightArm=ForwardsDown()];
-BodyMove compile("arm", {"right", "forwards", "up", "sideways"} , BodyMove m) = m[rightArm=ForwardsUpSideWays()];
-BodyMove compile("arm", {"right", "forwards", "down", "sideways"} , BodyMove m) = m[rightArm=ForwardsDownSideWays()];
+BodyMove compile("arm", {"right", "forwards", "up", "sideways"} , BodyMove m) = m[rightArm=ForwardsUpSideways()];
+BodyMove compile("arm", {"right", "forwards", "down", "sideways"} , BodyMove m) = m[rightArm=ForwardsDownSideways()];
 BodyMove compile("arm", {"right", "forwards", "sideways"} , BodyMove m) = m[rightArm=ForwardsSideways()];
-BodyMove compile("arm", {"right", "sideways"} , BodyMove m) = m[rightArm=SideWays()];
+BodyMove compile("arm", {"right", "sideways"} , BodyMove m) = m[rightArm=Sideways()];
 BodyMove compile("arm", {"right", "sideways", "up"} , BodyMove m) = m[rightArm=SidewaysUp()];
 BodyMove compile("arm", {"right", "sideways", "down"} , BodyMove m) = m[rightArm=SidewaysDown()];
 
@@ -129,10 +129,10 @@ BodyMove compile("arm", {"left", "down"} , BodyMove m) = m[leftArm=Down()];
 BodyMove compile("arm", {"left", "forwards"} , BodyMove m) = m[leftArm=Forwards()];
 BodyMove compile("arm", {"left", "forwards", "up"} , BodyMove m) = m[leftArm=ForwardsUp()];
 BodyMove compile("arm", {"left", "forwards", "down"} , BodyMove m) = m[leftArm=ForwardsDown()];
-BodyMove compile("arm", {"left", "forwards", "up", "sideways"} , BodyMove m) = m[leftArm=ForwardsUpSideWays()];
-BodyMove compile("arm", {"left", "forwards", "down", "sideways"} , BodyMove m) = m[leftArm=ForwardsDownSideWays()];
+BodyMove compile("arm", {"left", "forwards", "up", "sideways"} , BodyMove m) = m[leftArm=ForwardsUpSideways()];
+BodyMove compile("arm", {"left", "forwards", "down", "sideways"} , BodyMove m) = m[leftArm=ForwardsDownSideways()];
 BodyMove compile("arm", {"left", "forwards", "sideways"} , BodyMove m) = m[leftArm=ForwardsSideways()];
-BodyMove compile("arm", {"left", "sideways"} , BodyMove m) = m[leftArm=SideWays()];
+BodyMove compile("arm", {"left", "sideways"} , BodyMove m) = m[leftArm=Sideways()];
 BodyMove compile("arm", {"left", "sideways", "up"} , BodyMove m) = m[leftArm=SidewaysUp()];
 BodyMove compile("arm", {"left", "sideways", "down"} , BodyMove m) = m[leftArm=SidewaysDown()];
 

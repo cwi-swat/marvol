@@ -1,7 +1,6 @@
 package lang.marvol.backend;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import lang.marvol.backend.pos.NewPose;
 import lang.marvol.backend.pos.predefined.ArmPoses;
@@ -48,7 +47,7 @@ public class Moves {
 		if (c.getName().equals("Right")) {
 			return HeadHorPoses.Right;
 		}
-		if (c.getName().equals("Inwards")) {
+		if (c.getName().equals("FarRight")) {
 			return HeadHorPoses.FarRight;
 		}
 
@@ -165,7 +164,7 @@ public class Moves {
 	}
 
 	public void init(IString s) {
-		DanceInterpreter.init(s.toString());
+		DanceInterpreter.init(s.getValue());
 	}
 
 	public void cancelCurrentDance() {
@@ -176,10 +175,10 @@ public class Moves {
 		}
 	}
 
-	public void doAsyncDance(IList l) {
-		Iterator<IValue> i = l.iterator();
+	public void doAsyncDance(IList moves) {
 		ArrayList<NewPose> poses = new ArrayList<NewPose>();
-		while (i.hasNext()) {
+		for (IValue i: moves) {
+			System.out.println("I = " + i);
 			poses.add(fromRascalPose((IConstructor) i));
 		}
 		DanceInterpreter.asyncDoMove(poses);

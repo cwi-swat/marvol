@@ -45,6 +45,7 @@ syntax Move
   | @category="Constant" "right"
   | @category="Constant" "forward"
   | @category="Constant" "squat" 
+  | @category="Constant" "hawaii" 
   | @category="Constant" "luckyluke" 
   ;
 
