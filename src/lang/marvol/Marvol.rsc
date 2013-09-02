@@ -13,7 +13,7 @@ syntax Dance
   | "repeat" Nat Dance
   | "backforth" Nat Dance
   | @Foldable "{" Dance* "}"
-  | @Foldable "|" Dance* "|" 
+  | @Foldable "{|" Dance* "|}" 
   | "mirror" Dance
   | call: "@" Id name ";"
   | "nop" ";"
@@ -21,7 +21,7 @@ syntax Dance
 
 syntax Part
   = "arm"
-  | "leg"
+  | "legs"
   | "elbow"
   | "hand"
   | "chin"

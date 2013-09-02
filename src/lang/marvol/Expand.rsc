@@ -20,9 +20,10 @@ import String;
  * (especially wrt recursion in defs and undefined calls).
  */
 
+
 list[Dance] expand(Program p) = expand(p.main, getDefs(p));
 
-list[Dance] expand(d:(Dance)`|<Dance* ds>|`, map[Id, Dance] defs) {
+list[Dance] expand(d:(Dance)`{|<Dance* ds>|}`, map[Id, Dance] defs) {
   println("Expanding parallel merge");
   l = length(d, defs);
   println("length = <l>");
@@ -53,11 +54,14 @@ list[Dance] expand(d:(Dance)`|<Dance* ds>|`, map[Id, Dance] defs) {
 
 Dance makePar(list[Dance] ds) {
   if (ds == []) {
-    return (Dance)`||`;
+    return (Dance)`{||}`;
   }
-  if ((Dance)`|<Dance* dss>|` := makePar(tail(ds))) {
+  if ((Dance)`{|<Dance* dss>|}` := makePar(tail(ds))) {
     Dance d = ds[0];
-    return (Dance)`|<Dance d> <Dance* dss>|`;
+    if ((Dance)`{|<Dance* dss2>|}` := d) {
+      return (Dance)`{|<Dance* dss2> <Dance* dss>|}`;
+    }
+    return (Dance)`{|<Dance d> <Dance* dss>|}`;
   }
   throw "Should not happen";
 }
@@ -85,3 +89,18 @@ list[Dance] expand((Dance)`mirror <Dance d>`, map[Id,Dance] defs)
 
 default list[Dance] expand(Dance d, map[Id,Dance] defs) = [d];
 
+Program expandToSource(Program p) {
+  Dance makeSeq(list[Dance] ds) {
+    if (ds == []) {
+      return (Dance)`{}`;
+    }
+    if ((Dance)`{<Dance* dss>}` := makeSeq(tail(ds))) {
+      Dance d = ds[0];
+      return (Dance)`{<Dance d>
+                    '<Dance* dss>}`;
+    }
+    throw "Should not happen";
+  }
+  Dance d = makeSeq(expand(p));
+  return (Program)`<Dance d>`;
+}

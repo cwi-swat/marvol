@@ -2,6 +2,7 @@ module lang::marvol::Check
 
 import lang::marvol::Marvol;
 import lang::marvol::Utils;
+import lang::marvol::Config;
 import Message;
 import Relation;
 import ParseTree;
@@ -14,61 +15,6 @@ import ParseTree;
  * - Zip args should be equal length
  */
 
-rel[str, set[str]] PART_MOVES = {
-  <"arm", {"right", "up"}>,
-  <"arm", {"right", "down"}>,
-  <"arm", {"right", "forwards"}>,
-  <"arm", {"right", "forwards", "up"}>,
-  <"arm", {"right", "forwards", "down"}>,
-  <"arm", {"right", "forwards", "up", "sideways"}>,
-  <"arm", {"right", "forwards", "down", "sideways"}>,
-  <"arm", {"right", "forwards", "sideways"}>,
-  <"arm", {"right", "sideways"}>,
-  <"arm", {"right", "sideways", "up"}>,
-  <"arm", {"right", "sideways", "down"}>,
-  <"arm", {"right", "twist", "inwards"}>,
-  <"arm", {"right", "twist", "outwards"}>,
-  <"arm", {"right", "twist", "far", "inwards"}>,
-  
-  <"arm", {"left", "up"}>,
-  <"arm", {"left", "down"}>,
-  <"arm", {"left", "forwards"}>,
-  <"arm", {"left", "forwards", "up"}>,
-  <"arm", {"left", "forwards", "down"}>,
-  <"arm", {"left", "forwards", "up", "sideways"}>,
-  <"arm", {"left", "forwards", "down", "sideways"}>,
-  <"arm", {"left", "forwards", "sideways"}>,
-  <"arm", {"left", "sideways"}>,
-  <"arm", {"left", "sideways", "up"}>,
-  <"arm", {"left", "sideways", "down"}>,
-  <"arm", {"left", "twist", "inwards"}>,
-  <"arm", {"left", "twist", "outwards"}>,
-  <"arm", {"left", "twist", "far", "inwards"}>,
-
-  <"elbow", {"right", "stretch"}>,
-  <"elbow", {"right", "bend"}>,
-  <"hand", {"right", "open"}>,
-  <"hand", {"right", "close"}>,
-
-  <"elbow", {"left", "stretch"}>,
-  <"elbow", {"left", "bend"}>,
-  <"hand", {"left", "open"}>,
-  <"hand", {"left", "close"}>,
-
-  <"chin", {"forward"}>,
-  <"chin", {"up"}>,
-  <"chin", {"down"}>,
-  <"leg", {"stretch"}>,
-  <"leg", {"squat"}>,
-  <"leg", {"hawaii", "left"}>,
-  <"leg", {"hawaii", "right"}>,
-  <"leg", {"luckyluke"}>,
-  <"look", {"far", "left"}>,
-  <"look", {"far", "right"}>,
-  <"look", {"left"}>,
-  <"look", {"right"}>,
-  <"look", {"forward"}>
-};
 
 set[Message] checkMarvol(Program p) {
   errs = detectRecursion(p);
@@ -131,7 +77,7 @@ set[Message] check((Dance)`backforth <Nat _> <Dance d>`) = check(d);
 set[Message] check((Dance)`{<Dance* ds>}`) = 
   ( {} | it + check(d) | d <- ds );
 
-set[Message] check(d:(Dance)`|<Dance* ds>|`) 
+set[Message] check(d:(Dance)`{|<Dance* ds>|}`) 
   = ( {} | it + check(d) | d <- ds );
   
 set[Message] check((Dance)`mirror <Dance d>`) = check(d);

@@ -13,8 +13,9 @@ int length((Dance)`@<Id x>;`, map[Id, Dance] defs) = length(defs[x], defs);
 int length((Dance)`{<Dance* ds>}`, map[Id, Dance] defs) 
   = ( 0 | it + length(d, defs) | d <- ds ); 
 
-int length((Dance)`|<Dance* ds>|`, map[Id, Dance] defs)
-  = max([ length(d, defs) | d <- ds ]);
+int length((Dance)`{|<Dance* ds>|}`, map[Id, Dance] defs)
+  = (l != []) ? max(l) : 0
+  when l := [ length(d, defs) | d <- ds ];
   
 int length((Dance)`repeat <Nat n> <Dance d>`, map[Id, Dance] defs) 
   = toInt("<n>") * length(d, defs);
