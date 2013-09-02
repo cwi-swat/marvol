@@ -2,9 +2,171 @@ module lang::marvol::Compile
 
 import lang::marvol::Marvol;
 import lang::marvol::Moves;
+import ParseTree;
+import Message;
+import IO;
 
 /*
 Plan: compile = expand and then for each element in the list
   update the right field(d) in initPos.
 */
 
+
+/* Assumes expansion */
+
+
+tuple[set[Message], list[BodyMove]] compile(list[Dance] ds) {
+  cur = INIT_POS;
+  lst = [];
+  errs = {};
+  for (d <- ds) {
+    ms = toMoves(d);
+    if (hasConflicts(ms)) {
+      errs += {warning("Conflicting directions", d@\loc)};
+    }
+    else if (isIllegal(ms)) {
+      errs += {warning("Illegal move combination", d@\loc)};
+    }
+    else {
+      cur = ( cur | compile(m.part, m.moves, cur) | m <- ms );
+      lst += [cur];
+    }
+  }
+  return <errs, lst>;
+}
+
+     
+alias Move = tuple[str part, set[str] moves];
+
+
+set[Move] toMoves((Dance)`nop;`) = {};
+     
+set[Move] toMoves((Dance)`<Part p> <Move+ ms>;`) 
+  = {<"<p>", { "<m>" | m <- ms }>};
+
+set[Move] toMoves((Dance)`{|<Dance* ds>|}`) 
+  = ( {} | it + toMoves(d) | d <- ds, bprintln("D = <d>") );
+
+
+set[Move] toMoves((Dance)`mirror <Dance d>`) {
+  ms = {}; 
+  for (m <- toMoves(d)) {
+    if ("left" in m.moves) {
+      ms += {<m.part, m.moves - {"left"} + {"right"}>};
+    }
+    else if ("right" in m.moves) {
+      ms += {<m.part, m.moves - {"right"} + {"left"}>};
+    }
+    else {
+      ms += {m};
+    }
+  }
+  return ms;
+}
+
+
+bool anyArmStraightDown({<"arm", {"down", *_}>, <"elbow", {"stretch", *_}>, *_}) 
+  = true; 
+
+default bool anyArmStraightDown(set[Move] _) = false;
+
+bool anyArmInsideSelf({
+  <"arm", {"down", "twist", *str tws}>, 
+  <"elbow", {"bend", *str _}>, *Move _})
+  = "outwards" notin tws;
+
+default bool anyArmInsideSelf(set[Move] _) = false;
+
+bool armIsForwards({<"arm", ms>, <"elbow", {"stretch", *_}>, *_}) 
+  = "forward" in ms;
+
+bool isIllegal(set[Move] ms) = anyArmStraightDown(ms)
+  when <"legs", {"squat"}> in ms;
+
+bool isIllegal(set[Move] ms) = anyArmInsideSelf(ms)
+  when bprintln("MS = <ms>");
+
+bool isIllegal({
+  <"arm", {"left", "forwards", "twist", "inwards", *_}>,
+  <"arm", {"right", "forwards", "twist", "inwards", *_}>,
+  <"elbow", {"left", "bend", *_}>,
+  <"elbow", {"right", "bend", *_}>
+}) = true;
+
+default bool isIllegal(set[Move] _) = false;
+    
+    
+bool hasConflicts({<"arm", {str x, *_}>, <"arm", {x, *_}>, *_}) = true; 
+bool hasConflicts({<"hand", {str x, *_}>, <"hand", {x, *_}>, *_}) = true; 
+bool hasConflicts({<"elbow", {str x, *_}>, <"elbow", {x, *_}>, *_}) = true; 
+bool hasConflicts({<"look", set[str] ms>, <"look", ms>, *_}) = true; 
+bool hasConflicts({<"chin", set[str] ms>, <"chin", ms>, *_}) = true; 
+bool hasConflicts({<"legs", set[str] ms>, <"legs", ms>, *_}) = true; 
+default bool hasConflicts(set[Move] _) = false;
+
+
+/* Unfortunate heavy coupling with Config. */
+/* Todo: allow twists with forward etc. */
+
+BodyMove compile("arm", {"right", "up"}, BodyMove m) = m[rightArm=Up()]; 
+BodyMove compile("arm", {"right", "down"} , BodyMove m) = m[rightArm=Down()];
+BodyMove compile("arm", {"right", "forwards"} , BodyMove m) = m[rightArm=Forwards()];
+BodyMove compile("arm", {"right", "forwards", "up"} , BodyMove m) = m[rightArm=ForwardsUp()];
+BodyMove compile("arm", {"right", "forwards", "down"} , BodyMove m) = m[rightArm=ForwardsDown()];
+BodyMove compile("arm", {"right", "forwards", "up", "sideways"} , BodyMove m) = m[rightArm=ForwardsUpSideWays()];
+BodyMove compile("arm", {"right", "forwards", "down", "sideways"} , BodyMove m) = m[rightArm=ForwardsDownSideWays()];
+BodyMove compile("arm", {"right", "forwards", "sideways"} , BodyMove m) = m[rightArm=ForwardsSideways()];
+BodyMove compile("arm", {"right", "sideways"} , BodyMove m) = m[rightArm=SideWays()];
+BodyMove compile("arm", {"right", "sideways", "up"} , BodyMove m) = m[rightArm=SidewaysUp()];
+BodyMove compile("arm", {"right", "sideways", "down"} , BodyMove m) = m[rightArm=SidewaysDown()];
+
+BodyMove compile("arm", {"right", "twist", "inwards"} , BodyMove m) = m[rightArmTwist=Inwards()];
+BodyMove compile("arm", {"right", "twist", "outwards"} , BodyMove m) = m[rightArmTwist=Outwards()];
+BodyMove compile("arm", {"right", "twist", "far", "inwards"} , BodyMove m) = m[rightArmTwist=FarInwards()];
+
+BodyMove compile("arm", {"left", "up"}, BodyMove m) = m[leftArm=Up()]; 
+BodyMove compile("arm", {"left", "down"} , BodyMove m) = m[leftArm=Down()];
+BodyMove compile("arm", {"left", "forwards"} , BodyMove m) = m[leftArm=Forwards()];
+BodyMove compile("arm", {"left", "forwards", "up"} , BodyMove m) = m[leftArm=ForwardsUp()];
+BodyMove compile("arm", {"left", "forwards", "down"} , BodyMove m) = m[leftArm=ForwardsDown()];
+BodyMove compile("arm", {"left", "forwards", "up", "sideways"} , BodyMove m) = m[leftArm=ForwardsUpSideWays()];
+BodyMove compile("arm", {"left", "forwards", "down", "sideways"} , BodyMove m) = m[leftArm=ForwardsDownSideWays()];
+BodyMove compile("arm", {"left", "forwards", "sideways"} , BodyMove m) = m[leftArm=ForwardsSideways()];
+BodyMove compile("arm", {"left", "sideways"} , BodyMove m) = m[leftArm=SideWays()];
+BodyMove compile("arm", {"left", "sideways", "up"} , BodyMove m) = m[leftArm=SidewaysUp()];
+BodyMove compile("arm", {"left", "sideways", "down"} , BodyMove m) = m[leftArm=SidewaysDown()];
+
+BodyMove compile("arm", {"left", "twist", "inwards"} , BodyMove m) = m[leftArmTwist=Inwards()];
+BodyMove compile("arm", {"left", "twist", "outwards"} , BodyMove m) = m[leftArmTwist=Outwards()];
+BodyMove compile("arm", {"left", "twist", "far", "inwards"} , BodyMove m) = m[leftArmTwist=FarInwards()];
+
+  
+  
+BodyMove compile("elbow", {"right", "stretch"}, BodyMove m) = m[rightElbow=Stretch()];
+BodyMove compile("elbow", {"right", "bend"}, BodyMove m) = m[rightElbow=Bend()];
+
+BodyMove compile("hand", {"right", "open"}, BodyMove m) = m[rightHand=Open()];
+BodyMove compile("hand", {"right", "close"}, BodyMove m) = m[rightHand=Close()];
+
+BodyMove compile("elbow", {"left", "stretch"}, BodyMove m) = m[leftElbow=Stretch()];
+BodyMove compile("elbow", {"left", "bend"}, BodyMove m) = m[leftElbow=Bend()];
+
+BodyMove compile("hand", {"left", "open"}, BodyMove m) = m[leftHand=Open()];
+BodyMove compile("hand", {"left", "close"}, BodyMove m) = m[leftHand=Close()];
+  
+BodyMove compile("chin", {"forward"}, BodyMove m) = m[chin=CForward()];
+BodyMove compile("chin", {"up"}, BodyMove m) = m[chin=Up()];
+BodyMove compile("chin", {"down"}, BodyMove m) = m[chin=Down()];
+
+BodyMove compile("legs", {"forward"}, BodyMove m) = m[legs=Stretch()];
+BodyMove compile("legs", {"squat"}, BodyMove m) = m[legs=Squat()];
+BodyMove compile("legs", {"hawaii", "left"}, BodyMove m) = m[legs=HawaiiLeft()];
+BodyMove compile("legs", {"hawaii", "right"}, BodyMove m) = m[legs=HawaiiRight()];
+BodyMove compile("legs", {"luckyluke"}, BodyMove m) = m[legs=LuckyLuke()];
+
+BodyMove compile("look", {"far", "left"}, BodyMove m) = m[look=FarLeft()];
+BodyMove compile("look", {"far", "right"}, BodyMove m) = m[look=FarRight()];
+BodyMove compile("look", {"left"}, BodyMove m) = m[look=Left()];
+BodyMove compile("look", {"right"}, BodyMove m) = m[look=Right()];
+BodyMove compile("look", {"forward"}, BodyMove m) = m[look=LForward()];
+  

@@ -8,13 +8,13 @@ data LookMove
   | FarRight();
   
 LookMove mirror(LookMove m) {
-  switch(m) {
+  switch (m) {
     case FarLeft()  : return FarRight();
     case Left()     : return Right();
     case LForward() : return LForward();
     case Right()    : return Left();
     case FarRight() : return FarLeft();
-    }
+  }
 }
 
 data ChinMove
@@ -84,7 +84,7 @@ data BodyMove = BodyMove(
 
 alias BodyPosition = BodyMove;
 
-BodyPosition initPos = BodyMove (
+public BodyPosition INIT_POS = BodyMove (
    LForward(),
    CForward(),
    Down(),    Down(),
