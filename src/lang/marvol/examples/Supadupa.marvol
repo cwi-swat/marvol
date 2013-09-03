@@ -11,10 +11,8 @@ def checkright = {|
 
 def squatopen = {|
   legs luckyluke;
-  arm left forwards up;
-  arm right forwards up;
-  hand left open;
-  hand right open;
+  arms forwards up;
+  hands open;
 |}
 
 
@@ -28,10 +26,8 @@ def supadupa =
 
 def robotleft = 
  {| 
-  arm left sideways;
-  arm right sideways;
-  elbow left bend ;
-  elbow right bend;
+  arms sideways;
+  elbows bend ;
   arm left twist outwards;
   hand left open;
   look far left;
@@ -50,8 +46,7 @@ def robot =
 def fly = {| 
  arm left sideways up;
  arm right sideways down;
- hand left open;
- hand right open;
+ hands open;
  |}
  
  
@@ -59,8 +54,7 @@ def squatup = {|
   legs squat;
   arm left forwards up;
   arm right forwards down;
-  elbow left bend;
-  elbow right bend;
+  elbows  bend;
   chin up;
   look right; |}
   
