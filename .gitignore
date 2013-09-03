@@ -1,1 +1,3 @@
 bin
+*-normalized.marvol
+*.compiled

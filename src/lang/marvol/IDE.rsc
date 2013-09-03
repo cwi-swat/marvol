@@ -11,7 +11,7 @@ import Message;
 import IO;
 
 void setup() {
-  init("127.0.0.1");
+  //init("127.0.0.1");
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
@@ -40,11 +40,11 @@ void setup() {
               if (/^<fname:.*>\.marvol$/ := f.path) {
                 f.path = "<fname>.compiled";
                 writeFile(f, "MOVES\n");          
-                for (m <- moves[1]) {
+                for (m <- moves) {
                   appendToFile(f, "<m>\n");
                 }
               }
-              doAsyncDance(moves[1]);
+              doAsyncDance(moves);
             }
           }),
           action("Stop it!", void (Tree tree, loc selection) {

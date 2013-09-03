@@ -3,39 +3,20 @@ module lang::marvol::Compile
 import lang::marvol::Marvol;
 import lang::marvol::Moves;
 import ParseTree;
-import Message;
 import IO;
-
-/*
-Plan: compile = expand and then for each element in the list
-  update the right field(d) in initPos.
-*/
-
 
 /* Assumes expansion */
 
 alias Move = tuple[str part, set[str] moves];
 
 
-
-tuple[set[Message], list[BodyMove]] compile(list[Dance] ds) {
-
+list[BodyMove] compile(list[Dance] ds) {
+  cur = INIT_POS;
   lst = [];
-  errs = {};
   for (d <- ds) {
     ms = toMoves(d);
-    //if (hasConflicts(ms)) {
-    //  errs += {warning("Conflicting directions", d@\loc)};
-    //}
-    //else if (isIllegal(ms)) {
-    //  errs += {warning("Illegal move combination", d@\loc)};
-    //}
-    //else {
-      cur = INIT_POS;
-      cur = ( cur | compile(m.part, m.moves, it) | m <- ms, bprintln("M = <m>") );
-      iprintln(cur);
-      lst += [cur];
-    //}
+    cur = ( cur | compile(m.part, m.moves, it) | m <- ms );
+    lst += [cur];
   }
   return <errs, lst>;
 }
@@ -68,37 +49,6 @@ set[Move] toMoves((Dance)`mirror <Dance d>`) {
 }
 
 
-bool anyArmStraightDown({<"arm", {"down", *_}>, <"elbow", {"stretch", *_}>, *_}) 
-  = true; 
-
-default bool anyArmStraightDown(set[Move] _) = false;
-
-bool anyArmInsideSelf({
-  <"arm", {"down", "twist", *str tws}>, 
-  <"elbow", {"bend", *str _}>, *Move _})
-  = "outwards" notin tws;
-
-default bool anyArmInsideSelf(set[Move] _) = false;
-
-bool armIsForwards({<"arm", ms>, <"elbow", {"stretch", *_}>, *_}) 
-  = "forward" in ms;
-
-
-bool isIllegal(set[Move] ms) = anyArmStraightDown(ms)
-  when <"legs", {"squat"}> in ms;
-  
-bool isIllegal({
-  <"arm", {"left", "forwards", "twist", "inwards", *_}>,
-  <"arm", {"right", "forwards", "twist", "inwards", *_}>,
-  <"elbow", {"left", "bend", *_}>,
-  <"elbow", {"right", "bend", *_}>
-}) = true;
-
-default bool isIllegal(set[Move] ms) = 
-  (anyArmStraightDown(ms) && <"legs", {"squat"}> in ms)
-  || anyArmInsideSelf(ms);
-    
-    
 bool hasConflicts({<"arm", {str x, *_}>, <"arm", {x, *_}>, *_}) = true; 
 bool hasConflicts({<"hand", {str x, *_}>, <"hand", {x, *_}>, *_}) = true; 
 bool hasConflicts({<"elbow", {str x, *_}>, <"elbow", {x, *_}>, *_}) = true; 
