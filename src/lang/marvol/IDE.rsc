@@ -24,6 +24,15 @@ void setup() {
        }
        return {error("Invalid tree", input@\loc)};
      }),
+     
+     outliner(node (Tree input) {
+            if (Program p := input.top) {
+              return marvolOutline(p);
+            }
+            return "NO_OUTLINE"();
+          }),
+          
+          
      popup(menu("Marvol", 
         [
           edit("Normalize", str (Tree input, loc selection) {
@@ -85,4 +94,10 @@ Tree crossRef(Tree p) {
     case Dance d => d[@link=ds[d.name]@\loc]
       when d is call, d.name in ds
   }
+}
+
+node marvolOutline(Program p) {
+  return "root"([ 
+    "def"()[@label="<d.name>"][@\loc=d.name@\loc] | d <- p.defs 
+  ]);
 }
