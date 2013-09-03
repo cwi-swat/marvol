@@ -49,6 +49,15 @@ void setup() {
           }),
           action("Stop it!", void (Tree tree, loc selection) {
             cancelCurrentDance();
+          }),
+          action("Execute selection", void (Tree tree, loc selection) {
+            tsr = treeAt(#Dance, selection, tree);
+            if (Program p0 := tree.top, treeFound(Dance d) := tsr) {
+              ds = p0.defs;
+              p = (Program)`<Definition* ds> <Dance d>`;
+              moves = compile(expand(p));
+              //doAsyncDance(moves);
+            }
           })  
         ])),
         

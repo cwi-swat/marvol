@@ -18,7 +18,7 @@ list[BodyMove] compile(list[Dance] ds) {
     cur = ( cur | compile(m.part, m.moves, it) | m <- ms );
     lst += [cur];
   }
-  return <errs, lst>;
+  return lst;
 }
 
      
