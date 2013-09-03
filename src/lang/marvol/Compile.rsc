@@ -11,9 +11,10 @@ alias Move = tuple[str part, set[str] moves];
 
 
 list[BodyMove] compile(list[Dance] ds) {
-  cur = INIT_POS;
+
   lst = [];
   for (d <- ds) {
+    cur = INIT_POS;
     ms = toMoves(d);
     cur = ( cur | compile(m.part, m.moves, it) | m <- ms );
     lst += [cur];

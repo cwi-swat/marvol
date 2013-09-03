@@ -11,7 +11,7 @@ import Message;
 import IO;
 
 void setup() {
-  //init("127.0.0.1");
+  init("127.0.0.1");
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
@@ -65,7 +65,7 @@ void setup() {
               ds = p0.defs;
               p = (Program)`<Definition* ds> <Dance d>`;
               moves = compile(expand(p));
-              //doAsyncDance(moves);
+              doAsyncDance(moves);
             }
           })  
         ])),
