@@ -1,0 +1,78 @@
+def checkright = {|
+  legs hawaii left;
+  arm right sideways;
+  arm right twist outwards;
+  hand right open;
+  look far right;
+  arm left forwards;
+  arm left twist inwards;
+  elbow left bend;
+  |} 
+end
+
+def squatopen = {|
+  legs luckyluke;
+  arm left forwards up;
+  arm right forwards up;
+  hand left open;
+  hand right open;
+  
+|}
+end
+
+def supadupa = 
+  backforth 3 {
+    @checkright ;
+    @squatopen;
+    mirror @checkright;
+
+  }
+end
+
+def robotleft = 
+ {|arm left sideways;
+  arm right sideways;
+  elbow left bend ;
+  elbow right bend;
+  arm left twist outwards;
+  hand left open;
+  look far left;
+  arm right twist far inwards;
+  legs hawaii left;
+  |}
+  end
+
+def robot = 
+ backforth 3 {
+   @robotleft;
+   mirror @robotleft;
+ }
+ end
+ 
+def fly = {| 
+ arm left sideways up;
+ arm right sideways down;
+ |}
+ end
+ 
+def squatup = {|
+  legs squat;
+  arm left forwards up;
+  arm right forwards down;
+  elbow left bend;
+  elbow right bend;
+  chin up;
+  look right; |}
+  end
+  
+def fitness = backforth 3 {
+  @fly ;
+  @squatup;
+  mirror @fly;
+  } end
+
+repeat 5 {
+  //@fitness;
+  @supadupa;
+  @robot;
+}

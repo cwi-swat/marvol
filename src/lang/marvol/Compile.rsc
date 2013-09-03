@@ -83,9 +83,12 @@ default bool anyArmInsideSelf(set[Move] _) = false;
 bool armIsForwards({<"arm", ms>, <"elbow", {"stretch", *_}>, *_}) 
   = "forward" in ms;
 
+<<<<<<< HEAD
 bool isIllegal(set[Move] ms) = anyArmStraightDown(ms)
   when <"legs", {"squat"}> in ms;
   
+=======
+>>>>>>> b22666eccf8092724011703af5a2d8ccaef5189e
 bool isIllegal({
   <"arm", {"left", "forwards", "twist", "inwards", *_}>,
   <"arm", {"right", "forwards", "twist", "inwards", *_}>,
@@ -93,7 +96,9 @@ bool isIllegal({
   <"elbow", {"right", "bend", *_}>
 }) = true;
 
-default bool isIllegal(set[Move] _) = false;
+default bool isIllegal(set[Move] ms) = 
+  (anyArmStraightDown(ms) && <"legs", {"squat"}> in ms)
+  || anyArmInsideSelf(ms);
     
     
 bool hasConflicts({<"arm", {str x, *_}>, <"arm", {x, *_}>, *_}) = true; 
