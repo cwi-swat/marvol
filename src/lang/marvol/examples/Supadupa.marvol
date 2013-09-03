@@ -8,7 +8,6 @@ def checkright = {|
   arm left twist inwards;
   elbow left bend;
   |} 
-end
 
 def squatopen = {|
   legs luckyluke;
@@ -18,7 +17,6 @@ def squatopen = {|
   hand right open;
   
 |}
-end
 
 def supadupa = 
   backforth 3 {
@@ -27,7 +25,6 @@ def supadupa =
     mirror @checkright;
 
   }
-end
 
 def robotleft = 
  {|arm left sideways;
@@ -40,14 +37,12 @@ def robotleft =
   arm right twist far inwards;
   legs hawaii left;
   |}
-  end
 
 def robot = 
  backforth 3 {
    @robotleft;
    mirror @robotleft;
  }
- end
  
 def fly = {| 
  arm left sideways up;
@@ -55,7 +50,6 @@ def fly = {|
  hand left open;
  hand right open;
  |}
- end
  
 def squatup = {|
   legs squat;
@@ -65,14 +59,13 @@ def squatup = {|
   elbow right bend;
   chin up;
   look right; |}
-  end
   
 def fitness = repeat 3 {
   @squatup ;
   @fly;
   mirror @squatup;
   mirror @fly;
-  } end
+  } 
 
 repeat 5 {
   @fitness;

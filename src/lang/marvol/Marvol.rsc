@@ -6,7 +6,7 @@ extend lang::std::Comment;
 
 start syntax Program = Definition* defs Dance main; 
 
-syntax Definition = "def" Id name "=" Dance dance "end";
+syntax Definition = "def" Id name "=" Dance dance;
 
 syntax Dance
   = Part Move+ ";"

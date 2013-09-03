@@ -6,7 +6,7 @@ import List;
 import String;
 
 map[Id, Dance] getDefs(Program p) 
-  = ( x: d | /(Definition)`def <Id x> = <Dance d> end` := p );
+  = ( x: d | /(Definition)`def <Id x> = <Dance d>` := p );
   
 int length((Dance)`@<Id x>;`, map[Id, Dance] defs) = length(defs[x], defs);  
   
