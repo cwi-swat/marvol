@@ -83,12 +83,10 @@ default bool anyArmInsideSelf(set[Move] _) = false;
 bool armIsForwards({<"arm", ms>, <"elbow", {"stretch", *_}>, *_}) 
   = "forward" in ms;
 
-<<<<<<< HEAD
+
 bool isIllegal(set[Move] ms) = anyArmStraightDown(ms)
   when <"legs", {"squat"}> in ms;
   
-=======
->>>>>>> b22666eccf8092724011703af5a2d8ccaef5189e
 bool isIllegal({
   <"arm", {"left", "forwards", "twist", "inwards", *_}>,
   <"arm", {"right", "forwards", "twist", "inwards", *_}>,
@@ -113,8 +111,8 @@ default bool hasConflicts(set[Move] _) = false;
 /* Unfortunate heavy coupling with Config. */
 /* Todo: allow twists with forward etc. */
 
-BodyMove compile("arm", {"right", "up"}, BodyMove m) = m[rightArm=Up()]; 
-BodyMove compile("arm", {"right", "down"} , BodyMove m) = m[rightArm=Down()];
+BodyMove compile("arm", {"right", "up"}, BodyMove m) = m[rightArm=ArmMove::Up()]; 
+BodyMove compile("arm", {"right", "down"} , BodyMove m) = m[rightArm=ArmMove::Down()];
 BodyMove compile("arm", {"right", "forwards"} , BodyMove m) = m[rightArm=Forwards()];
 BodyMove compile("arm", {"right", "forwards", "up"} , BodyMove m) = m[rightArm=ForwardsUp()];
 BodyMove compile("arm", {"right", "forwards", "down"} , BodyMove m) = m[rightArm=ForwardsDown()];
@@ -129,8 +127,8 @@ BodyMove compile("arm", {"right", "twist", "inwards"} , BodyMove m) = m[rightArm
 BodyMove compile("arm", {"right", "twist", "outwards"} , BodyMove m) = m[rightArmTwist=Outwards()];
 BodyMove compile("arm", {"right", "twist", "far", "inwards"} , BodyMove m) = m[rightArmTwist=FarInwards()];
 
-BodyMove compile("arm", {"left", "up"}, BodyMove m) = m[leftArm=Up()]; 
-BodyMove compile("arm", {"left", "down"} , BodyMove m) = m[leftArm=Down()];
+BodyMove compile("arm", {"left", "up"}, BodyMove m) = m[leftArm=ArmMove::Up()]; 
+BodyMove compile("arm", {"left", "down"} , BodyMove m) = m[leftArm=ArmMove::Down()];
 BodyMove compile("arm", {"left", "forwards"} , BodyMove m) = m[leftArm=Forwards()];
 BodyMove compile("arm", {"left", "forwards", "up"} , BodyMove m) = m[leftArm=ForwardsUp()];
 BodyMove compile("arm", {"left", "forwards", "down"} , BodyMove m) = m[leftArm=ForwardsDown()];
@@ -160,8 +158,8 @@ BodyMove compile("hand", {"left", "open"}, BodyMove m) = m[leftHand=Open()];
 BodyMove compile("hand", {"left", "close"}, BodyMove m) = m[leftHand=Close()];
   
 BodyMove compile("chin", {"forward"}, BodyMove m) = m[chin=CForward()];
-BodyMove compile("chin", {"up"}, BodyMove m) = m[chin=Up()];
-BodyMove compile("chin", {"down"}, BodyMove m) = m[chin=Down()];
+BodyMove compile("chin", {"up"}, BodyMove m) = m[chin=ChinMove::Up()];
+BodyMove compile("chin", {"down"}, BodyMove m) = m[chin=ChinMove::Down()];
 
 BodyMove compile("legs", {"forward"}, BodyMove m) = m[legs=Stretch()];
 BodyMove compile("legs", {"squat"}, BodyMove m) = m[legs=Squat()];

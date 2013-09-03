@@ -47,6 +47,7 @@ public class DanceInterpreter {
 		}
 		shouldStop = true;
 		curThread.join();
+		curThread = null;
 	}
 
 	public static void asyncDoMove(ArrayList<NewPose> p) {

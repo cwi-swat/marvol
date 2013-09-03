@@ -52,6 +52,8 @@ def robot =
 def fly = {| 
  arm left sideways up;
  arm right sideways down;
+ hand left open;
+ hand right open;
  |}
  end
  
@@ -65,14 +67,15 @@ def squatup = {|
   look right; |}
   end
   
-def fitness = backforth 3 {
-  @fly ;
-  @squatup;
+def fitness = repeat 3 {
+  @squatup ;
+  @fly;
+  mirror @squatup;
   mirror @fly;
   } end
 
 repeat 5 {
-  //@fitness;
+  @fitness;
   @supadupa;
   @robot;
-}
+ }
