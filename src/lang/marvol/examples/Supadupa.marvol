@@ -15,19 +15,20 @@ def squatopen = {|
   arm right forwards up;
   hand left open;
   hand right open;
-  
 |}
 
+
 def supadupa = 
-  backforth 3 {
+  backforth 2 {
     checkright ;
     squatopen;
     mirror checkright;
-
   }
 
+
 def robotleft = 
- {|arm left sideways;
+ {| 
+  arm left sideways;
   arm right sideways;
   elbow left bend ;
   elbow right bend;
@@ -37,6 +38,7 @@ def robotleft =
   arm right twist far inwards;
   legs hawaii left;
   |}
+  
 
 def robot = 
  backforth 3 {
@@ -44,12 +46,14 @@ def robot =
    mirror robotleft;
  }
  
+ 
 def fly = {| 
  arm left sideways up;
  arm right sideways down;
  hand left open;
  hand right open;
  |}
+ 
  
 def squatup = {|
   legs squat;
@@ -60,15 +64,43 @@ def squatup = {|
   chin up;
   look right; |}
   
-def fitness = repeat 3 {
+  
+def fitness = repeat 2 {
   squatup ;
   fly;
   mirror squatup;
   mirror fly;
   } 
+  
+
+def gangdam2 = { {|
+  arm right sideways up;
+  arm right twist inwards;
+  hand right close;
+  elbow right bend;
+  legs hawaii right;
+  look far right;
+  chin down;
+  |}
+  {|
+  elbow left bend;
+  arm right forwards ;
+  arm right twist outwards;
+  chin up;
+
+  |}
+  }
+
+
+def gang =  repeat 2 {
+  gangdam2; 
+  mirror gangdam2; 
+} 
+
 
 repeat 5 {
-  fitness;
   supadupa;
   robot;
+  fitness;
+  gang;
  }

@@ -11,7 +11,7 @@ import Message;
 import IO;
 
 void setup() {
-  //init("127.0.0.1");
+  init("127.0.0.1");
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
