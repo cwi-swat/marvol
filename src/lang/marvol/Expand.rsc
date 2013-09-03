@@ -66,7 +66,7 @@ Dance makePar(list[Dance] ds) {
   throw "Should not happen";
 }
 
-list[Dance] expand((Dance)`@<Id x>;`, map[Id,Dance] defs) 
+list[Dance] expand((Dance)`<Id x>;`, map[Id,Dance] defs) 
   = expand(defs[x], defs);
 
 list[Dance] expand((Dance)`{<Dance* ds>}`, map[Id,Dance] defs) 

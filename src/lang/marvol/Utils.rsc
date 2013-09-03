@@ -8,7 +8,7 @@ import String;
 map[Id, Dance] getDefs(Program p) 
   = ( x: d | /(Definition)`def <Id x> = <Dance d>` := p );
   
-int length((Dance)`@<Id x>;`, map[Id, Dance] defs) = length(defs[x], defs);  
+int length((Dance)`<Id x>;`, map[Id, Dance] defs) = length(defs[x], defs);  
   
 int length((Dance)`{<Dance* ds>}`, map[Id, Dance] defs) 
   = ( 0 | it + length(d, defs) | d <- ds ); 

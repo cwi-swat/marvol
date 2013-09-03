@@ -28,7 +28,7 @@ set[Message] checkMarvol(Program p) {
 
 set[Message] detectRecursion(Program p) {
   ds = getDefs(p);
-  deps = { <a, b> | a <- ds, /(Dance)`@<Id b>;` := ds[a] };
+  deps = { <a, b> | a <- ds, /(Dance)`<Id b>;` := ds[a] };
   depsTr = deps+;
   return { error("Recursion", a@\loc) | <a, b> <- deps, a in depsTr[a] }; 
 }
@@ -49,12 +49,12 @@ set[Message] duplicateDefs(Program p) {
 set[Message] undefinedDefs(Program p) {
   ds = getDefs(p);
   return { error("Undefined dance", b@\loc) 
-            | /(Dance)`@<Id b>;` := p, b notin ds };
+            | /(Dance)`<Id b>;` := p, b notin ds };
 }
 
 set[Message] unusedDefs(Program p) {
  ds = getDefs(p);
- calls = { x | /(Dance)`@<Id x>;` := p };
+ calls = { x | /(Dance)`<Id x>;` := p };
  return { warning("Unused definition", d@\loc) | d <- ds, d notin calls };
 }
 

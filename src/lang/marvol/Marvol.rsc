@@ -15,7 +15,7 @@ syntax Dance
   | @Foldable "{" Dance* "}"
   | @Foldable "{|" Dance* "|}" 
   | "mirror" Dance
-  | call: "@" Id name ";"
+  | @category="Identifier" call: Id name ";"
   | "nop" ";"
   ;
 

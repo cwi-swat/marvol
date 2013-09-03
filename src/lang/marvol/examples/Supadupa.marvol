@@ -20,9 +20,9 @@ def squatopen = {|
 
 def supadupa = 
   backforth 3 {
-    @checkright ;
-    @squatopen;
-    mirror @checkright;
+    checkright ;
+    squatopen;
+    mirror checkright;
 
   }
 
@@ -40,8 +40,8 @@ def robotleft =
 
 def robot = 
  backforth 3 {
-   @robotleft;
-   mirror @robotleft;
+   robotleft;
+   mirror robotleft;
  }
  
 def fly = {| 
@@ -61,14 +61,14 @@ def squatup = {|
   look right; |}
   
 def fitness = repeat 3 {
-  @squatup ;
-  @fly;
-  mirror @squatup;
-  mirror @fly;
+  squatup ;
+  fly;
+  mirror squatup;
+  mirror fly;
   } 
 
 repeat 5 {
-  @fitness;
-  @supadupa;
-  @robot;
+  fitness;
+  supadupa;
+  robot;
  }
