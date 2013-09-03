@@ -26,6 +26,9 @@ syntax Part
   | "hand"
   | "chin"
   | "look"
+  | "arms"
+  | "elbows"
+  | "hands"
   ;
   
 syntax Move

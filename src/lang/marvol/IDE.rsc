@@ -65,7 +65,7 @@ void setup() {
               ds = p0.defs;
               p = (Program)`<Definition* ds> <Dance d>`;
               moves = compile(expand(p));
-              //doAsyncDance(moves);
+              doAsyncDance(moves);
             }
           })  
         ])),

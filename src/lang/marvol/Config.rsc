@@ -30,6 +30,21 @@ public rel[str, set[str]] PART_MOVES = {
   <"arm", {"left", "twist", "inwards"}>,
   <"arm", {"left", "twist", "outwards"}>,
   <"arm", {"left", "twist", "far", "inwards"}>,
+  
+  <"arms", {"up"}>,
+  <"arms", {"down"}>,
+  <"arms", {"forwards"}>,
+  <"arms", {"forwards", "up"}>,
+  <"arms", {"forwards", "down"}>,
+  <"arms", {"forwards", "up", "sideways"}>,
+  <"arms", {"forwards", "down", "sideways"}>,
+  <"arms", {"forwards", "sideways"}>,
+  <"arms", {"sideways"}>,
+  <"arms", {"sideways", "up"}>,
+  <"arms", {"sideways", "down"}>,
+  <"arms", {"twist", "inwards"}>,
+  <"arms", {"twist", "outwards"}>,
+  <"arms", {"twist", "far", "inwards"}>,
 
   <"elbow", {"right", "stretch"}>,
   <"elbow", {"right", "bend"}>,
@@ -40,6 +55,11 @@ public rel[str, set[str]] PART_MOVES = {
   <"elbow", {"left", "bend"}>,
   <"hand", {"left", "open"}>,
   <"hand", {"left", "close"}>,
+
+  <"elbows", {"stretch"}>,
+  <"elbows", {"bend"}>,
+  <"hands", {"open"}>,
+  <"hands", {"close"}>,
 
   <"chin", {"forward"}>,
   <"chin", {"up"}>,

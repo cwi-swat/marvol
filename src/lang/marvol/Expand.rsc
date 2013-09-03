@@ -66,8 +66,6 @@ Dance makePar(list[Dance] ds) {
   throw "Should not happen";
 }
 
-list[Dance] expand((Dance)`<Id x>;`, map[Id,Dance] defs) 
-  = expand(defs[x], defs);
 
 list[Dance] expand((Dance)`{<Dance* ds>}`, map[Id,Dance] defs) 
   = ( [] | it + expand(d, defs) | d <- ds );
@@ -90,6 +88,19 @@ list[Dance] backForth(Dance d, map[Id, Dance] defs) {
 
 list[Dance] expand((Dance)`mirror <Dance d>`, map[Id,Dance] defs)
   = [ (Dance)`mirror <Dance e>` | e <- expand(d, defs) ];
+
+
+list[Dance] expand((Dance)`arms <Move+ ms>;`, map[Id, Dance] defs)
+  = expand((Dance)`{|arm left <Move+ ms>; arm right <Move+ ms>;|}`, defs);
+
+list[Dance] expand((Dance)`hands <Move+ ms>;`, map[Id, Dance] defs)
+  = expand((Dance)`{|hand left <Move+ ms>; hand right <Move+ ms>;|}`, defs);
+
+list[Dance] expand((Dance)`elbows <Move+ ms>;`, map[Id, Dance] defs)
+  = expand((Dance)`{|elbow left <Move+ ms>; elbow right <Move+ ms>;|}`, defs);
+
+list[Dance] expand((Dance)`<Id x>;`, map[Id,Dance] defs) 
+  = expand(defs[x], defs);
 
 default list[Dance] expand(Dance d, map[Id,Dance] defs) = [d];
 
