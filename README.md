@@ -10,8 +10,8 @@ Get Rascal & Marvol https://github.com/cwi-swat/marvol
 
 Get Java JNI NAO library from Maarten’s NAO DVD
 On linux & Mac set your LD_LIBRARY_PATH environment variable (on windows I do not know what to do)
- to include the directory where the shared library (.so file on linux/mac) file is at
-import the marvol project into eclipse and add the .jar file as build-time dependency (the jar file is in the same directory as the shared library).
+ to include the directory where the shared library (.so file on linux/mac) file is at. Fire up eclipse from the console where you set
+library path and fire up the second level eclipse. import the marvol project into eclipse and add the .jar file as build-time dependency (the jar file is in the same directory as the shared library).
 Set the ip adress of the NAO in compile.rsc
 run in Rascal console: 
 
