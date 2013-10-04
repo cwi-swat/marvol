@@ -12,6 +12,7 @@ import lang.marvol.backend.pos.predefined.HeadVerPoses;
 import lang.marvol.backend.pos.predefined.LegPoses;
 
 import com.aldebaran.proxy.ALMotionProxy;
+import com.aldebaran.proxy.ALTextToSpeechProxy;
 import com.aldebaran.proxy.Variant;
 
 public class DanceInterpreter {
@@ -21,6 +22,7 @@ public class DanceInterpreter {
 	static ALMotionProxy mp = null;
 	static Thread curThread = null;
 	static boolean shouldStop = false;
+//	private static ALTextToSpeechProxy speech;
 
 	// This is required so that we can use the 'Variant' object
 	static {
@@ -35,6 +37,8 @@ public class DanceInterpreter {
 
 	public static void init(String addr) {
 		mp = new ALMotionProxy(addr, 9559);
+//		speech = new ALTextToSpeechProxy(addr, 9559);
+//		speech.say("Let's dance!");
 		stiffnessOn(mp);
 
 		curPos = 0;

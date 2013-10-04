@@ -9,9 +9,11 @@ import lang::marvol::Compile;
 import lang::marvol::Moves;
 import Message;
 import IO;
-
+ 
+public str IP = "169.254.166.107";
+  
 void setup() {
-  init("127.0.0.1");
+  init(IP);
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
@@ -32,17 +34,13 @@ void setup() {
             return "NO_OUTLINE"();
           }),
           
-          
-     popup(menu("Marvol", 
-        [
-          edit("Normalize", str (Tree input, loc selection) {
+     popup(edit("Normalize", str (Tree input, loc selection) {
             if (Program p := input.top) {
              return unparse(expandToSource(p));
             }
             return unparse(input);
-          }),
-          
-          action("Dance!", void (Tree tree, loc selection) {
+          })), 
+     popup(action("Marve... Dance!", void (Tree tree, loc selection) {
             if (Program p := tree.top) {
               moves = compile(expand(p));
               f = p@\loc;
@@ -55,11 +53,11 @@ void setup() {
               }
               doAsyncDance(moves);
             }
-          }),
-          action("Stop it!", void (Tree tree, loc selection) {
+          })), 
+     popup(action("Marv... Stop it!", void (Tree tree, loc selection) {
             cancelCurrentDance();
-          }),
-          action("Execute selection", void (Tree tree, loc selection) {
+          })),  
+     popup(action("Marv... Move!", void (Tree tree, loc selection) {
             tsr = treeAt(#Dance, selection, tree);
             if (Program p0 := tree.top, treeFound(Dance d) := tsr) {
               ds = p0.defs;
@@ -67,8 +65,7 @@ void setup() {
               moves = compile(expand(p));
               doAsyncDance(moves);
             }
-          })  
-        ])),
+          })),
         
      builder(set[Message] ((&T<:Tree) tree) {
         if (Program p := tree.top) {
@@ -100,4 +97,29 @@ node marvolOutline(Program p) {
   return "root"([ 
     "def"()[@label="<d.name>"][@\loc=d.name@\loc] | d <- p.defs 
   ]);
+}
+
+
+void marvolShell() {
+  createConsole("Marvol", "? ", execCommand);
+}
+
+str execCommand(str line) {
+  try {
+    Dance dance;
+    try {
+       dance = parse(#Dance, line);
+    }
+    catch ParseError(_): {
+       dance = parse(#Dance, "<line>;");
+    }
+    program = (Program)`<Dance dance>`;
+    moves = compile(expand(program));
+    doAsyncDance(moves);
+    
+    return "ok\n? ";
+  }
+  catch ParseError(e): {
+    return "Syntax error at column <e.begin.column>\n? ";
+  }
 }

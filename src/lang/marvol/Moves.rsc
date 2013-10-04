@@ -87,7 +87,7 @@ alias BodyPosition = BodyMove;
 public BodyPosition INIT_POS = BodyMove (
    LForward(),
    CForward(),
-   Down(),    Down(),
+   ArmMove::Down(),    ArmMove::Down(),
    Inwards(), Inwards(),
    Stretch(), Stretch(),
    Close(),   Close(),
