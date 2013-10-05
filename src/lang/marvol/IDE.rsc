@@ -9,8 +9,9 @@ import lang::marvol::Compile;
 import lang::marvol::Moves;
 import Message;
 import IO;
+import String;
  
-public str IP = "169.254.166.107";
+public str IP = "169.254.51.192";
   
 void setup() {
   init(IP);
@@ -108,10 +109,10 @@ str execCommand(str line) {
   try {
     Dance dance;
     try {
-       dance = parse(#Dance, line);
+       dance = parse(#Dance, trim(line));
     }
     catch ParseError(_): {
-       dance = parse(#Dance, "<line>;");
+       dance = parse(#Dance, trim("<line>;"));
     }
     program = (Program)`<Dance dance>`;
     moves = compile(expand(program));
