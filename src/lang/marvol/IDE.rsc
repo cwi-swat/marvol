@@ -14,7 +14,11 @@ import String;
 public str IP = "169.254.51.192";
   
 void setup() {
+<<<<<<< Updated upstream
   init(IP);
+=======
+  //init("127.0.0.1");
+>>>>>>> Stashed changes
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
