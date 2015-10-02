@@ -10,7 +10,7 @@ import lang::marvol::Moves;
 import util::REPL;
 
 public REPL getREPL() 
-    = repl("Marvol", "Let\'s dance", "?", |tmp:///marv.history|, handler, completor);
+    = repl("Marvol", "Let\'s dance", "? ", |tmp:///marv.history|, handler, completor);
     
 private CommandResult handler(str line) {
     try {
@@ -24,10 +24,10 @@ private CommandResult handler(str line) {
         program = (Program)`<Dance dance>`;
         moves = compile(expand(program));
         doAsyncDance(moves);
-        return <"dance started!", [], "?">;
+        return <"dance started!", [], "? ">;
     }
     catch ParseError(e): {
-        return <"Syntax error at column <e.begin.column>", [], "?">;
+        return <"Syntax error at column <e.begin.column>", [], "? ">;
     }
 }
 
