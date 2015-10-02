@@ -22,9 +22,10 @@ list[BodyMove] compile(list[Dance] ds) {
   return lst;
 }
 
-     
+set[Move] toMoves((Dance) `say <Speech sp>`) = {<"mouth", {"<sp.text>"}>};
+set[Move] toMoves((Dance) `say <Speech sp>;`) = {<"mouth", {"<sp.text>"}>};
 
-set[Move] toMoves((Dance)`nop;`) = {};
+set[Move] toMoves((Dance)`nop;`) = {}; 
      
 set[Move] toMoves((Dance)`<Part p> <Move+ ms>;`) 
   = {<"<p>", { "<m>" | m <- ms }>};
@@ -123,4 +124,7 @@ BodyMove compile("look", {"far", "right"}, BodyMove m) = m[look=FarRight()];
 BodyMove compile("look", {"left"}, BodyMove m) = m[look=Left()];
 BodyMove compile("look", {"right"}, BodyMove m) = m[look=Right()];
 BodyMove compile("look", {"forward"}, BodyMove m) = m[look=LForward()];
+BodyMove compile("mouth", {str uttering}, BodyMove m) = m[mouth=say(uttering)];
+
+
   

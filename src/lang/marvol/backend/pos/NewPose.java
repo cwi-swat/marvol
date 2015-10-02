@@ -9,6 +9,7 @@ import lang.marvol.backend.pos.predefined.HeadVerPoses;
 import lang.marvol.backend.pos.predefined.LegPoses;
 
 import com.aldebaran.proxy.ALMotionProxy;
+import com.aldebaran.proxy.ALTextToSpeechProxy;
 import com.aldebaran.proxy.Variant;
 
 public class NewPose {
@@ -18,7 +19,7 @@ public class NewPose {
 	private ElbowPoses lElbow, rElbow;
 	private ArmTwistPoses lTwistArm, rTwistArm;
 	private ArmPoses lArm,rArm;
-
+	private Say uttering;
 
 	private HandPoses lHand,rHand;
 	private LegPoses legs;
@@ -34,13 +35,14 @@ public class NewPose {
             ArmTwistPoses.Inwards,
             HandPoses.Closed,
             HandPoses.Closed,
-            LegPoses.Init);
+            LegPoses.Init,
+            Say.Nothing);
 	
 
 	private NewPose(HeadHorPoses hhead, HeadVerPoses vhead, ElbowPoses lElbow,
 			ElbowPoses rElbow, ArmPoses lArm, ArmPoses rArm, 
 			ArmTwistPoses lTwistArm, ArmTwistPoses rTwistArm, HandPoses lHand,
-			HandPoses rHand, LegPoses leg) {
+			HandPoses rHand, LegPoses leg, Say uttering) {
 		this.hhead = hhead;
 		this.vhead = vhead;
 		this.lElbow = lElbow;
@@ -52,6 +54,7 @@ public class NewPose {
 		this.lHand = lHand;
 		this.rHand = rHand;
 		this.legs = leg;
+		this.uttering = uttering;
 	}
 	
 	private NewPose(NewPose p) {
@@ -71,6 +74,12 @@ public class NewPose {
 	public NewPose look(HeadHorPoses p){
 		NewPose x = new NewPose(this);
 		x.hhead = p;
+		return x;
+	}
+	
+	public NewPose say(Say s) {
+		NewPose x = new NewPose(this);
+		x.uttering = s;
 		return x;
 	}
 	
@@ -189,7 +198,7 @@ public class NewPose {
 	
 	
 	public NewPose mirror(){
-		return new NewPose(hhead.mirror(),vhead,rElbow,lElbow,rArm,lArm,rTwistArm,lTwistArm,rHand,lHand,legs.mirror());
+		return new NewPose(hhead.mirror(),vhead,rElbow,lElbow,rArm,lArm,rTwistArm,lTwistArm,rHand,lHand,legs.mirror(), null);
 	}
 
 	Variant angles() {
@@ -228,8 +237,9 @@ public class NewPose {
 				});
 	}
 	
-	public void goToMe(ALMotionProxy p, float seconds){
-		p.angleInterpolation(jointNames,  angles(),times(seconds), true);
+	public void goToMe(ALMotionProxy p, ALTextToSpeechProxy speech, float seconds) {
+		uttering.speak(speech);
+		p.angleInterpolation(jointNames, angles(), times(seconds), true);
 	}
 	
 	Variant times(float seconds){

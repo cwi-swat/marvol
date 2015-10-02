@@ -41,6 +41,10 @@ data ArmTwistMove
   | Inwards()
   | Outwards();
   
+data SayMove 
+  = say(str uttering) 
+  | silence()
+  ; 
   
 data ElbowMove
   = Stretch()
@@ -66,21 +70,16 @@ LegsMove mirror(LegsMove m) {
     }
 }
   
-  
 data BodyMove = BodyMove(
-	LookMove look, 
-	ChinMove chin, 
-	ArmMove leftArm, ArmMove rightArm,
-	ArmTwistMove leftArmTwist, ArmTwistMove rightArmTwist,
-	ElbowMove leftElbow, ElbowMove rightElbow,
-	HandMove leftHand, HandMove rightHand,
-	LegsMove legs
+	  LookMove look, 
+	  ChinMove chin, 
+	  ArmMove leftArm, ArmMove rightArm,
+	  ArmTwistMove leftArmTwist, ArmTwistMove rightArmTwist,
+	  ElbowMove leftElbow, ElbowMove rightElbow,
+	  HandMove leftHand, HandMove rightHand,
+	  LegsMove legs,
+	  SayMove mouth
 	);
-
-
-  
-
-
 
 alias BodyPosition = BodyMove;
 
@@ -91,7 +90,8 @@ public BodyPosition INIT_POS = BodyMove (
    Inwards(), Inwards(),
    Stretch(), Stretch(),
    Close(),   Close(),
-   LegStretch());
+   LegStretch(), 
+   silence());
    
    
    
@@ -103,25 +103,25 @@ BodyPosition mirror(BodyPosition pos) =
            pos.rightHand, pos.leftHand,
            mirror(pos.legs)); 
 
-public bool armIsStraightDown(ArmMove arm, ElbowMove elbow) = (arm == Down() && elbow == Stretch());
+bool armIsStraightDown(ArmMove arm, ElbowMove elbow) = (arm == Down() && elbow == Stretch());
 
-public bool armInsideSelf(ArmMove arm, ElbowMove elbow, ArmTwistMove twist) = (arm == Down() && elbow == Bend() && twist != Outwards);
-public bool armIsForward(ArmMove arm) = arm == Forward() || arm == ForwardsUp() || arm == ForwardsDown();
+bool armInsideSelf(ArmMove arm, ElbowMove elbow, ArmTwistMove twist) = (arm == Down() && elbow == Bend() && twist != Outwards);
+bool armIsForward(ArmMove arm) = arm == Forward() || arm == ForwardsUp() || arm == ForwardsDown();
 
-public bool isIllegalMove(BodyMove m) = 
+bool isIllegalMove(BodyMove m) = 
 	(m.legs == Squat() && armIsStraightDown(leftArm,leftElbow) || armIsStraightDown(rightArm,rightElbow)) ||
 	(armForward(m.leftArm) && armIsForward(m.rightArm) && m.leftArm == m.rightArm && m.leftElbow == Bend() && m.rightElbow == Bend() && m.leftArmTwist == Inwards() && m.rightArmTwist == Inwards()) ||
 	armInsideSelf(m.leftArm, m.leftElbow, m.leftArmTwist) || 
         armInsideSelf(m.rightArm, m.rightElbow, m.rightArmTwist) 
 	;
-public bool isLegalTransition(BodyPosition a, BodyPosition b) = true; 
+bool isLegalTransition(BodyPosition a, BodyPosition b) = true; 
 
 @javaClass{lang.marvol.backend.Moves}
-public java void init(str robotAddr);
+java void init(str robotAddr);
 
 @javaClass{lang.marvol.backend.Moves}
-public java void doAsyncDance(list[BodyMove] p);
+java void doAsyncDance(list[BodyMove] p);
 
 // blocks until dance is cancelled
 @javaClass{lang.marvol.backend.Moves}
-public java void cancelCurrentDance();
+java void cancelCurrentDance();

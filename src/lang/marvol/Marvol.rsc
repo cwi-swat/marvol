@@ -8,6 +8,8 @@ start syntax Program = Definition* defs Dance main;
 
 syntax Definition = "def" Id name "=" Dance dance;
 
+lexical Speech = "\"" ![\n\r\"]* text "\"";
+
 syntax Dance
   = Part Move+ ";"
   | "repeat" Nat Dance
@@ -17,6 +19,7 @@ syntax Dance
   | "mirror" Dance
   | @category="Identifier" call: Id name ";"
   | "nop" ";"
+  | "say" Speech speech ";"?
   ;
 
 syntax Part

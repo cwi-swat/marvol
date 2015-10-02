@@ -3,6 +3,7 @@ package lang.marvol.backend;
 import java.util.ArrayList;
 
 import lang.marvol.backend.pos.NewPose;
+import lang.marvol.backend.pos.Say;
 import lang.marvol.backend.pos.predefined.ArmPoses;
 import lang.marvol.backend.pos.predefined.ArmTwistPoses;
 import lang.marvol.backend.pos.predefined.ElbowPoses;
@@ -159,8 +160,22 @@ public class Moves {
 				.rightElbow(elbowFromR((IConstructor) c.get("rightElbow")))
 				.leftHand(handsFromR((IConstructor) c.get("leftHand")))
 				.rightHand(handsFromR((IConstructor) c.get("rightHand")))
-				.moveLegs(legsFromR((IConstructor) c.get("legs")));
+				.moveLegs(legsFromR((IConstructor) c.get("legs")))
+				.say(sayFromR((IConstructor) c.get("mouth")));
 
+	}
+
+	private Say sayFromR(IConstructor parameter) {
+		System.err.println("say " + parameter);
+		if (parameter == null) {
+			return Say.Nothing;
+		}
+		else if (!"silence".equals(parameter.getName())) {
+			return new Say(((IString) parameter.get("uttering")).getValue());
+		}
+		else {
+			return Say.Nothing;
+		}
 	}
 
 	public void init(IString s) {
@@ -178,7 +193,7 @@ public class Moves {
 	public void doAsyncDance(IList moves) {
 		ArrayList<NewPose> poses = new ArrayList<NewPose>();
 		for (IValue i: moves) {
-			System.out.println("I = " + i);
+			System.err.println("move: " + i);
 			poses.add(fromRascalPose((IConstructor) i));
 		}
 		DanceInterpreter.asyncDoMove(poses);

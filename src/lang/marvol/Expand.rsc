@@ -24,11 +24,9 @@ import String;
 list[Dance] expand(Program p) = expand(p.main, getDefs(p));
 
 list[Dance] expand(d:(Dance)`{|<Dance* ds>|}`, map[Id, Dance] defs) {
-  println("Expanding parallel merge");
   l = length(d, defs);
-  println("length = <l>");
   ess = [ expand(d2, defs) | d2 <- ds ];
-  println("ESS = <ess>");
+
   for (e <- ess) println("e = <intercalate(", ", e)>");
   return for (i <- [0..l]) {
     list[Dance] elts = [];

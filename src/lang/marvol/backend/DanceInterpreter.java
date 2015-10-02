@@ -22,7 +22,7 @@ public class DanceInterpreter {
 	static ALMotionProxy mp = null;
 	static Thread curThread = null;
 	static boolean shouldStop = false;
-	private static ALTextToSpeechProxy speech;
+	static ALTextToSpeechProxy speech;
 
 	// This is required so that we can use the 'Variant' object
 	static {
@@ -38,6 +38,7 @@ public class DanceInterpreter {
 	public static void init(String addr) {
 		mp = new ALMotionProxy(addr, 9559);
 		speech = new ALTextToSpeechProxy(addr, 9559);
+		speech.setVolume(1.0f);
 		speech.say("Let's dance!");
 		stiffnessOn(mp);
 

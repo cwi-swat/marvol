@@ -11,6 +11,8 @@ def checkright = {|
   |} 
 
 def squatopen = {|
+  say "I am sexy and I know it!";
+  say "Hoppa gangnam style. hop hop   hop"
   legs luckyluke;
   arms forwards up;
   hands open;
@@ -81,6 +83,7 @@ def gangdam2 = { {|
   legs hawaii right;
   look far right;
   chin down;
+  say "Hallo Davy"
   |}
   {|
   // elbow left forwards;
@@ -90,9 +93,9 @@ def gangdam2 = { {|
   |}
   }
 
-repeat 1 {
-  supadupa;
-  robot;
-  fitness;
-  gang;
+repeat 3 {
+  say "hallo Bert";
+  chin up;
+  {| say "bye Bert";  arm left up; chin down; hand left open;|}
+  
 }
