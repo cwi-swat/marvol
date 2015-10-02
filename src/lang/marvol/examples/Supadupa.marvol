@@ -7,6 +7,7 @@ def checkright = {|
   arm left forwards;
   arm left twist inwards;
   elbow left bend;
+  arm left forwards;
   |} 
 
 def squatopen = {|
@@ -14,8 +15,6 @@ def squatopen = {|
   arms forwards up;
   hands open;
 |}
-
-
 
 def supadupa = 
   backforth 2 {
@@ -34,6 +33,7 @@ def robotleft =
   look far left;
   arm right twist far inwards;
   legs hawaii left;
+  arm right twist outwards;
   |}
   
 
@@ -87,12 +87,10 @@ def gangdam2 = { {|
   arm right forwards ;
   arm right twist outwards;
   chin up;
-
   |}
   }
 
-
-repeat 5 {
+repeat 1 {
   supadupa;
   robot;
   fitness;

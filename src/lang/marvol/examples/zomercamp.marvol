@@ -1,0 +1,36 @@
+def voorbeeld = {
+	{|
+	arm right up;
+	look far left;
+	elbow right bend;
+	|}
+	{|
+	hand right close;
+	legs hawaii left;
+	|}
+}
+
+def wave = {
+	{|
+	arm left down; 
+	arm right up;
+	|}
+	{|
+	arm left up;
+	arm right down;
+	|}
+}
+
+def faye = {
+	legs hawaii right;
+	legs squat;
+	legs luckyluke;
+}
+
+
+repeat 2 {
+	repeat 3 {
+		wave;
+	}
+	faye;
+}

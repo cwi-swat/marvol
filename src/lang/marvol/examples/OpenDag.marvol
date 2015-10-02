@@ -69,30 +69,5 @@ def Gaia=repeat 5 { {| hands open;arms sideways;chin up;|} legs luckyluke;}
 def bjorn= {repeat 2 { {|arm right up; legs hawaii left;|} {| legs hawaii right;arms down;|}arm left forwards;} arms down;}
 
 repeat 5 {
-  Lotte;
-  bjorn;
-  Gaia;
-  casper;
-  marijn;
-  lennaert;
-  Olivia;
-  luna;
-  divino;
-  lucas;
-  hamza;
-  Kjell;
-  levi;
-  Johannes;
-  arash;
-  ioana;
-  Luc;
-  Eva;
-  dylan;
-  jesse;
-  iwan; 
-  gabriel;
-  maureen;
-  christina;
-  fenna;
-  koen;
+	squatup;	
 }

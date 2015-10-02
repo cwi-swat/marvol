@@ -1,4 +1,4 @@
-module lang::marvol::IDE
+module Plugin
 
 import util::IDE;
 import ParseTree;
@@ -11,14 +11,10 @@ import Message;
 import IO;
 import String;
  
-public str IP = "169.254.51.192";
+public str IP = "192.168.1.103";
   
-void setup() {
-<<<<<<< Updated upstream
+void main() {
   init(IP);
-=======
-  //init("127.0.0.1");
->>>>>>> Stashed changes
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
@@ -51,7 +47,7 @@ void setup() {
               f = p@\loc;
               if (/^<fname:.*>\.marvol$/ := f.path) {
                 f.path = "<fname>.compiled";
-                writeFile(f, "MOVES\n");          
+                writeFile(f.top, "MOVES\n");          
                 for (m <- moves) {
                   appendToFile(f, "<m>\n");
                 }
@@ -78,7 +74,7 @@ void setup() {
           f = p@\loc;
           if (/^<fname:.*>\.marvol$/ := f.path) {
             f.path = "<fname>-normalized.marvol";
-            writeFile(f, src);
+            writeFile(f.top, src);
             return {};
           }
           return {error("Could not obtain filename", tree@\loc)};
