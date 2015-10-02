@@ -7,9 +7,11 @@ import lang::marvol::Check;
 import lang::marvol::Expand;
 import lang::marvol::Compile;
 import lang::marvol::Moves;
+import lang::marvol::REPL;
 import Message;
 import IO;
 import String;
+import util::REPL;
  
 public str IP = "192.168.1.103";
   
@@ -102,25 +104,5 @@ node marvolOutline(Program p) {
 
 
 void marvolShell() {
-  createConsole("Marvol", "? ", execCommand);
-}
-
-str execCommand(str line) {
-  try {
-    Dance dance;
-    try {
-       dance = parse(#Dance, trim(line));
-    }
-    catch ParseError(_): {
-       dance = parse(#Dance, trim("<line>;"));
-    }
-    program = (Program)`<Dance dance>`;
-    moves = compile(expand(program));
-    doAsyncDance(moves);
-    
-    return "ok\n? ";
-  }
-  catch ParseError(e): {
-    return "Syntax error at column <e.begin.column>\n? ";
-  }
+	startREPL(getREPL());
 }
