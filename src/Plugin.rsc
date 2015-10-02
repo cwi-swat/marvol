@@ -1,12 +1,14 @@
 module Plugin
 
 import util::IDE;
+import util::ContentCompletion;
 import ParseTree;
 import lang::marvol::Marvol;
 import lang::marvol::Check;
 import lang::marvol::Expand;
 import lang::marvol::Compile;
 import lang::marvol::Moves;
+import lang::marvol::Proposer;
 import Message;
 import IO;
 import String;
@@ -14,7 +16,7 @@ import String;
 public str IP = "192.168.1.103";
   
 void main() {
-  init(IP);
+  //init(IP);
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });
@@ -27,6 +29,13 @@ void main() {
        }
        return {error("Invalid tree", input@\loc)};
      }),
+     
+     proposer(list[CompletionProposal] (Tree fd, str prefix, int requestOffset) {
+     	if (Program p := fd.top) {
+    		return propose(prefix, findDanceDefinitions(p));
+    	}  
+    	return {error("Invalid tree", input@\loc)}; 		
+    }, alphaNumeric),
      
      outliner(node (Tree input) {
             if (Program p := input.top) {
