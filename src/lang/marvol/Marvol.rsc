@@ -52,7 +52,18 @@ syntax Move
   | @category="Constant" "luckyluke" 
   ;
 
-keyword Reserved = ;
+keyword Reserved 
+	= "repeat" | "backforth" | "mirror" | "nop"
+	;
+
+keyword Reserved 
+	= "arm" | "legs" | "elbow" | "hand" | "chin" | "look" | "arms" | "elbows" | "hands" 
+	;
+	
+keyword Reserved 
+	= "up" | "down" | "twist" | "bend" | "stretch" | "close" |  "open" |  "far" 
+	| "forwards" | "sideways" | "inwards" | "outwards" | "left" | "right" | "forward" | "squat" 
+ 	| "hawaii" | "luckyluke";
 
 lexical Id = ([a-zA-Z_] !<< [a-zA-Z_][a-zA-Z0-9_]* !>> [a-zA-Z0-9_]) \ Reserved;
 
