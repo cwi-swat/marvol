@@ -18,7 +18,7 @@ import util::REPL;
 public str IP = "192.168.1.103";
   
 void main() {
-  //init(IP);
+  init(IP);
   registerLanguage("Marvol", "marvol", Tree (str src, loc org) {
      return parse(#start[Program], src, org);
   });

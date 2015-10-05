@@ -1,0 +1,364 @@
+def xebun = {
+{| 
+legs hawaii left;
+elbow left bend;
+elbow right bend;
+
+|}
+legs hawaii right;
+look right;
+say "hallo my name is marv";
+}
+
+def laura = {
+
+{|
+legs luckyluke;
+arm right up;
+hand right open;
+elbow left bend;
+say "Hallo opa Fred";
+|}
+arm left down;
+//legs stretch;
+
+}
+
+def lardEnCas = {{| arm right sideways; arm left sideways; legs luckyluke; |}  legs hawaii left;}
+def jonathan = { arm right up;   } 
+def dayo = { {|look left; arm right up;  |} look right; }
+
+def max = {{| arm left up ; arm right up; chin up; |} legs squat; }
+
+def renze = { legs luckyluke; say "AAAaaaarghh, hey renze wat doe je now"; legs hawaii left; {| legs hawaii right; arm left up; arm right up; |} }
+
+def  rosie = { arm left up;arm left sideways; {|look far right;legs squat;|} chin up;}
+
+def Nathan = { {|arm left up;arm right up; |} legs squat;}
+
+def mees = { legs hawaii left;legs hawaii right;look left;look right; }
+
+def abbe = {  chin up; arm left forwards up; {| chin down; arm left forwards down; legs squat; |}}
+
+def inay = { 
+	repeat 2 {
+		look right;
+		look left;
+		legs luckyluke;
+	}	 
+}
+
+def simon = {
+	arm right down;
+	arm right up;
+	arm left sideways;
+	arm right sideways up;  
+}
+
+def krijn = {
+	legs squat;
+	legs hawaii left;
+	look far right;
+	look far left;
+	arm left up;
+	arm right up;
+}
+
+def marius = {
+	legs hawaii left;
+	legs hawaii right;
+	arm right sideways;
+	arm left sideways;
+	{|
+		arm left up;
+		arm right up;
+	|}
+	{|
+		arm left forwards up;
+		arm right forwards up;
+	|}
+	legs squat;
+}
+
+def david = { {| arm left up; arm right up; |} look left; look right; chin down; chin up; legs squat; }
+
+def riemerEnTaeke = {
+	{|
+		legs squat;
+		chin down;
+	|}
+	{| 
+		arms sideways;
+		chin up;
+	|}
+	{|
+		elbow left bend;
+		elbow right bend;
+	|}
+	{|
+		elbow left stretch;
+		elbow right stretch;
+		arms forwards up;
+	|}
+	legs luckyluke;
+}
+
+def julian = {
+	arms up;
+}
+
+def sjoerd = {
+	chin down;
+	legs squat;
+	arms forwards up;
+	arms forwards down;
+	{|		
+		hand left open;
+		hand right open;
+	|}
+	{|
+		hand left close;
+		hand right close;
+	|}
+}
+
+def mads = {
+	look right;
+	look left;
+	arms up;
+	{|
+		legs squat;
+		arms up;
+		chin down;
+	|}
+	{|
+		arm left sideways;
+		elbow left bend;
+	|}
+	elbow left stretch;
+}
+
+def robin = {
+	legs squat;
+	{|
+		arms forwards down;
+		elbow right bend;
+		elbow left bend;
+	|}
+	{|
+		arm left up;
+		chin down;
+	|}
+	legs luckyluke;
+}
+
+def sep = {
+	repeat 2 {
+		arm right up;
+		arm left up;
+	}
+	
+	repeat 2 {
+		legs hawaii right;
+		legs hawaii left;
+	}
+	
+	legs squat;
+	arms sideways;
+	
+	chin down;
+}
+
+def Max = {
+	arm left up;
+	arm right up;
+	legs luckyluke;
+	legs squat;
+	
+	repeat 2 {
+		chin up;
+		chin down;
+	}
+	
+	legs hawaii left;
+	{|
+		hand left open;
+		hand right open;
+		arms up;
+	|}
+
+	arms sideways up;	
+}
+
+def naomi = {
+	arms up;
+	arms down;
+	elbow left bend;
+	elbow right bend;
+	
+	repeat 2 {
+		look left;
+		look right;
+	}
+	
+	{|
+		legs squat;
+		arms forwards up;
+		chin up;
+	|}
+	
+	chin down;
+	arm left sideways;
+	arm right sideways;
+}
+
+def roman = {
+	{|
+		arms sideways;
+		hand left open;
+		hand right open;
+	|}
+	repeat 2 {
+		chin up;
+		chin down;
+	}
+	
+	{|
+		legs squat;
+		arms sideways;
+		hand left open;
+		hand right open;
+	|}
+	
+	{|
+		elbow left bend;
+		elbow right bend;
+	|}
+	{|
+		arms up;
+		legs squat;
+	|}	
+	
+	{|	
+		arms forwards up;
+		hand left open;
+		hand right open;
+		legs squat;
+	|}
+	
+	{|
+		arm left sideways;
+		hand left open;
+		elbow right bend;
+	|}
+	{|
+		arm right sideways;
+		hand right open;
+		elbow left bend;
+	|}	
+}
+
+def tijn = {
+	chin up;
+	legs hawaii left;
+	chin down;
+	legs hawaii right;
+	{| 
+		arm left up;
+		look right;
+	|}
+	{|
+		arm right up;
+		look left;
+	|}
+	{|
+		arms up ;
+		legs squat;
+		chin up;
+	|}
+	chin down;
+}
+
+def jorin = {
+	repeat 2 {
+		arm left up;
+		arm right up;
+	}
+	
+	{|
+		legs squat;
+		arms up;
+	|}
+	
+	legs hawaii right;
+	legs hawaii left;
+	look far right;
+	look far left;
+	chin down;
+	chin up;
+	
+	{|
+		arms sideways;
+		hand left open;
+		hand right open;
+	|}
+	
+	{|
+		legs luckyluke;
+		arms forwards up;
+	|}
+	
+	arms up;
+}
+
+def Simon = {
+	{|
+		hand left open;
+		hand right open;
+		legs squat;
+	|}	
+	
+	look right;
+	look left;
+	chin up;
+	chin down;
+	
+	legs hawaii left;
+	legs hawaii right;
+	
+	repeat 2 {
+		arms forwards up;
+		arms sideways;
+		{|
+			hand left open;
+			hand right open;
+		|}
+	}
+}
+
+def fabioEnMarieke = {
+	{|
+		hand left open;
+		hand right open;
+		arms up;
+	|}
+	
+	{|
+		hand left open;
+		hand right open;
+		arms down;
+	|}
+	
+	legs squat;
+	legs luckyluke;
+	
+	{|
+		arm left up;
+		look far left;
+		chin down;
+	|}
+}
+
+repeat 2 {
+	fabioEnMarieke;
+}
