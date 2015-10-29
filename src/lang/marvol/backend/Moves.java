@@ -2,6 +2,12 @@ package lang.marvol.backend;
 
 import java.util.ArrayList;
 
+import org.rascalmpl.value.IConstructor;
+import org.rascalmpl.value.IList;
+import org.rascalmpl.value.IString;
+import org.rascalmpl.value.IValue;
+import org.rascalmpl.value.IValueFactory;
+
 import lang.marvol.backend.pos.NewPose;
 import lang.marvol.backend.pos.Say;
 import lang.marvol.backend.pos.predefined.ArmPoses;
@@ -11,12 +17,6 @@ import lang.marvol.backend.pos.predefined.HandPoses;
 import lang.marvol.backend.pos.predefined.HeadHorPoses;
 import lang.marvol.backend.pos.predefined.HeadVerPoses;
 import lang.marvol.backend.pos.predefined.LegPoses;
-
-import org.eclipse.imp.pdb.facts.IConstructor;
-import org.eclipse.imp.pdb.facts.IList;
-import org.eclipse.imp.pdb.facts.IString;
-import org.eclipse.imp.pdb.facts.IValue;
-import org.eclipse.imp.pdb.facts.IValueFactory;
 
 public class Moves {
 	public Moves(IValueFactory values) {
