@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/jnaoqi-1.14.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/java-naoqi-sdk-2.5.0.203-mac64.jar"/>
+	<classpathentry kind="lib" path="lib/libqi-java-2.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

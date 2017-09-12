@@ -1,3 +1,4 @@
 bin
 *-normalized.marvol
 *.compiled
+.DS_Store

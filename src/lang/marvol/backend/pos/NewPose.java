@@ -1,5 +1,12 @@
 package lang.marvol.backend.pos;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+
+import com.aldebaran.qi.helper.proxies.ALMotion;
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+
 import lang.marvol.backend.pos.predefined.ArmPoses;
 import lang.marvol.backend.pos.predefined.ArmTwistPoses;
 import lang.marvol.backend.pos.predefined.ElbowPoses;
@@ -7,10 +14,6 @@ import lang.marvol.backend.pos.predefined.HandPoses;
 import lang.marvol.backend.pos.predefined.HeadHorPoses;
 import lang.marvol.backend.pos.predefined.HeadVerPoses;
 import lang.marvol.backend.pos.predefined.LegPoses;
-
-import com.aldebaran.proxy.ALMotionProxy;
-import com.aldebaran.proxy.ALTextToSpeechProxy;
-import com.aldebaran.proxy.Variant;
 
 public class NewPose {
 	
@@ -167,7 +170,7 @@ public class NewPose {
 
 
 	
-	private static Variant jointNames = new Variant(new String[] {
+	private static ArrayList<String> jointNames = new ArrayList<>(Arrays.asList(
 			"HeadPitch",
 			"HeadYaw",
 			"RShoulderPitch",
@@ -193,21 +196,19 @@ public class NewPose {
 			"LWristYaw",
 			"RWristYaw",
 			"RHand",
-			"LHand"
-	});
+			"LHand"));
 	
 	
 	public NewPose mirror(){
 		return new NewPose(hhead.mirror(),vhead,rElbow,lElbow,rArm,lArm,rTwistArm,lTwistArm,rHand,lHand,legs.mirror(), null);
 	}
 
-	Variant angles() {
+	ArrayList<Float> angles() {
 		ArmPos rArmpos = rArm.pos.mirror();
 		ArmTwist rTwistArmpos = rTwistArm.pos.mirror();
 		ElbowPos rElbowpos = rElbow.pos.mirror();
 		HandPos rHandpos = rHand.pos.mirror();
-		return new Variant(
-				new float[] {
+		return new ArrayList<>(Arrays.asList(
 						vhead.pos.HeadPitch,
 						hhead.pos.HeadYaw,
 						rArmpos.ShoulderPitch,
@@ -234,20 +235,24 @@ public class NewPose {
 						0f,
 						rHandpos.Hand,
 						lHand.pos.Hand
-				});
+				));
 	}
 	
-	public void goToMe(ALMotionProxy p, ALTextToSpeechProxy speech, float seconds) {
-		uttering.speak(speech);
-		p.angleInterpolation(jointNames, angles(), times(seconds), true);
-	}
-	
-	Variant times(float seconds){
-		float[] times = new float[jointNames.getSize()];
-		for(int i = 0 ; i < times.length; i++){
-			times[i] = (float)seconds;
+	public void goToMe(ALMotion p, ALTextToSpeech speech, float seconds) {
+//		uttering.speak(speech);
+		try {
+			p.angleInterpolation(jointNames, angles(), times(seconds), true);
+		} catch (ExecutionException | InterruptedException e) {
+			e.printStackTrace();
 		}
-		return new Variant(times);
+	}
+	
+	ArrayList<Float> times(float seconds){
+		ArrayList<Float> times = new ArrayList<>(jointNames.size());
+		for(int i = 0 ; i < jointNames.size(); i++){
+			times.add((float)seconds);
+		}
+		return times;
 	}
 	
 

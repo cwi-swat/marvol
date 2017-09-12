@@ -3,5 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: marvol
 Bundle-SymbolicName: marvol;singleton:=true
 Bundle-Version: 1.0.0
-Require-Bundle: rascal
+Require-Bundle: rascal_eclipse
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

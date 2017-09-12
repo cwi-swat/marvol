@@ -1,6 +1,8 @@
 package lang.marvol.backend.pos;
 
-import com.aldebaran.proxy.ALTextToSpeechProxy;
+import java.util.concurrent.ExecutionException;
+
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 public class Say {
 	private final String uttering;
@@ -10,9 +12,14 @@ public class Say {
 		this.uttering = uttering;
 	}
 
-	public void speak(ALTextToSpeechProxy speech) {
+	public void speak(ALTextToSpeech speech) {
 		if (uttering != null && !"".equals(uttering)) {
-			speech.say(uttering);
+			try {
+				speech.say(uttering);
+			} catch (ExecutionException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

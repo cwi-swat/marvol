@@ -1,6 +1,12 @@
 package lang.marvol.backend;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import com.aldebaran.qi.Application;
+import com.aldebaran.qi.Session;
+import com.aldebaran.qi.helper.proxies.ALMotion;
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 import lang.marvol.backend.pos.NewPose;
 import lang.marvol.backend.pos.predefined.ArmPoses;
@@ -11,35 +17,58 @@ import lang.marvol.backend.pos.predefined.HeadHorPoses;
 import lang.marvol.backend.pos.predefined.HeadVerPoses;
 import lang.marvol.backend.pos.predefined.LegPoses;
 
-import com.aldebaran.proxy.ALMotionProxy;
-import com.aldebaran.proxy.ALTextToSpeechProxy;
-import com.aldebaran.proxy.Variant;
-
 public class DanceInterpreter {
 
 	static String addr = null;
 	static int curPos = 0;
-	static ALMotionProxy mp = null;
+	static ALMotion mp = null;
 	static Thread curThread = null;
 	static boolean shouldStop = false;
-	static ALTextToSpeechProxy speech;
+	static ALTextToSpeech speech;
 
 	// This is required so that we can use the 'Variant' object
-	static {
-		System.loadLibrary("jnaoqi");
-	}
+//	static {
+//		System.loadLibrary("libqi");
+//	}
 
-	static void stiffnessOn(ALMotionProxy proxy) {
-		proxy.stiffnessInterpolation(new Variant(new String[] { "Body" }),
-				new Variant(new float[] { 1f }),
-				new Variant(new float[] { 1f }));
+	static void stiffnessOn(ALMotion proxy) {
+		try {
+			ArrayList<String> parts = new ArrayList<String>();
+			parts.add("Body");
+			
+			ArrayList<Float> stiffness = new ArrayList<Float>();
+			stiffness.add(1f);
+
+			ArrayList<Float> times = new ArrayList<Float>();
+			times.add(1f);
+			
+			proxy.stiffnessInterpolation(parts, stiffness, times);
+		} catch (ExecutionException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void init(String addr) {
-		mp = new ALMotionProxy(addr, 9559);
-		speech = new ALTextToSpeechProxy(addr, 9559);
-		speech.setVolume(1.0f);
-		speech.say("Let's dance!");
+		Application application = new Application(new String[] {}, "tcp://" + addr + ":9559");
+		application.start();
+		
+//		Session session = new Session();
+//		session.connect(addr + ":9559");
+		try {
+			mp = new ALMotion(application.session());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println(e);
+		}
+		try {
+			speech = new ALTextToSpeech(application.session());
+			speech.setVolume(1.0f);
+			speech.say("Let's dance!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println(e);
+		}
 		stiffnessOn(mp);
 
 		curPos = 0;
@@ -66,8 +95,8 @@ public class DanceInterpreter {
 	}
 
 	public static void main(String[] argv) {
-		// init("192.16.201.36");
-		init("127.0.0.1");
+		 init("192.168.1.102");
+		//init("127.0.0.1");
 		ArrayList<NewPose> p = new ArrayList<NewPose>();
 		NewPose i = NewPose.Init;
 
