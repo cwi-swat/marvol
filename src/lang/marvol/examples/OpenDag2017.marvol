@@ -1,0 +1,411 @@
+
+
+def us = {
+	{|
+		elbow right bend;
+		legs luckyluke;
+	|}
+	{|
+		arms forwards sideways;
+	|}
+	{|
+		elbow left bend;
+		legs luckyluke;
+	|}
+	{|
+		arms sideways;
+		elbows stretch;
+	|}
+	{|
+		arm right forwards up;
+		legs hawaii right;
+	|}
+}
+
+def zhaozhao = {
+	{| 
+		legs hawaii left;
+		arm right sideways up;
+		arm left sideways up;
+	|}
+	{|	
+		chin down;
+		look left;
+	|}
+	
+}
+
+def flora = {
+	legs hawaii left ; 
+	legs hawaii right ;
+}
+
+def danilo = {
+ arm left up;
+ 
+ chin down;
+ hand right open;
+ look far right; 
+}
+
+def aldoiva = {
+ {|arm right up;
+ arm left up;
+ |}
+ legs squat;{|arm right down;
+ arm left down;|}
+ elbow right bend;
+}
+
+def finn = {
+ chin up;
+ legs squat;
+ arms up;
+ elbow left bend;
+}
+
+def Marloes = {
+look left; 
+legs squat;
+legs hawaii left;
+legs hawaii right;
+arm right up;
+arm left sideways up;
+}
+
+def kelly ={
+ look left;
+ legs hawaii right;
+ arms up; 
+ arm left forwards;
+}
+
+def bram ={
+elbow left bend;
+legs squat;
+look left;
+}
+
+def yves = {
+arm right sideways up;
+elbow left bend;
+legs squat;
+hand left open;
+}
+
+def cas = {
+elbow left bend;
+legs squat;
+look far left;
+legs hawaii right;
+legs hawaii left;
+}
+
+def luca ={
+	 legs squat;
+	 look far left;
+	 arms up;
+	 chin up;
+	 elbow right bend; 
+}
+
+def ryan = {
+elbow right bend;
+arms up;
+chin up;
+elbow left stretch;
+}
+
+def jonathan = {
+legs squat;
+arms up;
+elbow left bend;
+legs hawaii left;
+}
+
+def leroy ={
+arm right up;
+legs squat;
+chin up;
+elbow left stretch;
+elbow right stretch;
+}
+
+def delon = {
+legs squat;
+elbow right stretch;
+arm left up;
+chin up;
+arm right sideways;
+}
+
+def Elvis={
+ repeat 3 
+ {|
+  arm left forwards;
+ 	elbow right bend;
+ 	chin down;
+ |}
+  
+}
+
+def Mat = {
+legs squat;
+look far left;
+arm right sideways up;
+legs hawaii right;
+
+}
+
+def Erik ={
+arm right up;
+arm left up;
+{|
+elbow left bend;
+elbow right bend;
+|}
+}
+
+def lisa = {
+arms up;
+legs squat;
+elbow left bend;
+chin up;
+chin down;
+
+}
+
+def klara = {
+legs squat;
+elbow left bend;
+arms sideways;
+}
+
+def david ={
+	legs squat;
+	legs hawaii left; 
+	arms up;
+
+}
+
+
+def  yonni ={
+legs hawaii left;
+legs hawaii right;
+elbow left bend;
+elbow right bend;
+
+}
+
+def  elin = {
+arm right sideways;
+elbow right bend;
+hand left open;
+hand right open;
+
+}
+
+
+def maia={
+legs squat;
+arms up;
+legs hawaii right;
+legs hawaii left;
+chin up;
+}
+
+def Evelien ={
+ arms up;
+ legs squat;
+ elbow left bend;
+ chin up;
+ hands open;
+ look left;
+ look right;
+ 
+}
+
+def Maurice={
+{|
+elbow right bend;
+arm left sideways up;
+chin down;
+|}
+}
+
+def sam = 
+{
+legs squat;
+arms sideways;
+ hand left open;
+ chin up;
+ 
+
+
+}
+
+def theRobotBoogie ={
+ legs hawaii left;
+ legs hawaii right;
+ legs squat;
+ 
+ {|
+ 	legs hawaii left;
+ 	arm right up;
+ |}
+ {|
+	 legs hawaii right;
+	 arm left up;
+ |}
+ legs squat;
+}
+
+def rozemarijn = {
+arm left up;
+ legs squat;
+ elbow right bend;
+ chin down;
+ hand left open;
+  legs hawaii right;
+legs hawaii left;
+ 
+}
+
+def noor_en_pleun = {
+arms up;
+elbow right bend;
+elbow left bend;
+chin forward;
+legs hawaii left;
+legs hawaii right;
+}
+
+def kyan ={
+hand left open;
+legs squat;
+look far left;
+
+}
+
+def kristina = {
+legs squat;
+elbow left bend;
+chin up;
+arm left forwards;
+}
+
+def thomas = {
+arms sideways;
+legs hawaii left;
+legs hawaii right;
+legs squat;
+chin up;
+}
+
+def langlang = {
+legs squat;
+arm left up;
+arm right down;
+chin up;
+chin down;
+chin forward;
+
+}
+
+def julia = {
+elbow left bend;
+elbow right bend;
+legs squat;
+arms sideways;
+look far right; 
+}
+
+def matisse ={
+look far left;
+legs squat;
+chin  forward;
+arm left forwards;
+elbow left bend;
+}
+
+def matthijs = {
+hand left open;
+chin down;
+legs squat;
+
+}
+
+def  Joost ={
+{|
+arm right up;
+elbow left bend;
+|}
+legs squat;
+chin up;
+{|
+hand left open;
+hand right open;
+|}
+{|
+arm right sideways;
+arm left sideways;
+legs squat;
+|}
+}
+
+
+def Francesc =
+{
+	  {|
+	  	look left;
+	  	legs squat;
+	    arm right up;
+	    arm left sideways down;
+	  |}
+	  legs hawaii left;
+	  legs hawaii right;
+	  {|
+	  
+	  	look right;
+	  	legs squat;
+	    arm left down;
+	    arm right sideways up;
+	  |}
+}
+
+def lewis = {
+{|
+elbow left bend;
+arm right up;
+|}
+legs hawaii left;
+legs hawaii right;
+chin up;
+}
+
+def simon = {
+legs squat;
+{|
+arm right sideways;
+elbow left bend;
+chin down;
+|}
+
+}
+
+def fimme = {
+legs hawaii left;
+{|
+legs hawaii right;
+arms sideways;
+hand left open;
+hand right open;
+look left;
+
+|}
+look right;
+}
+
+repeat 3 {
+	fimme;
+}

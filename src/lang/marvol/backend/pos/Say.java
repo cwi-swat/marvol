@@ -2,6 +2,7 @@ package lang.marvol.backend.pos;
 
 import java.util.concurrent.ExecutionException;
 
+import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 public class Say {
@@ -16,7 +17,7 @@ public class Say {
 		if (uttering != null && !"".equals(uttering)) {
 			try {
 				speech.say(uttering);
-			} catch (ExecutionException | InterruptedException e) {
+			} catch (InterruptedException | CallError e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

@@ -1,17 +1,16 @@
 module lang::marvol::Compile
 
+import IO; 
+import ParseTree;
 import lang::marvol::Marvol;
 import lang::marvol::Moves;
-import ParseTree;
-import IO; 
+
 
 /* Assumes expansion */
 
 alias Move = tuple[str part, set[str] moves];
 
-
 list[BodyMove] compile(list[Dance] ds) {
-
   lst = [];
   for (d <- ds) {
     cur = INIT_POS;
@@ -79,10 +78,11 @@ BodyMove compile("arm", {"right", "twist", "inwards"} , BodyMove m) = m[rightArm
 BodyMove compile("arm", {"right", "twist", "outwards"} , BodyMove m) = m[rightArmTwist=Outwards()];
 BodyMove compile("arm", {"right", "twist", "far", "inwards"} , BodyMove m) = m[rightArmTwist=FarInwards()];
 
+
 BodyMove compile("arm", {"left", "up"}, BodyMove m) = m[leftArm=ArmMove::Up()]; 
 BodyMove compile("arm", {"left", "down"} , BodyMove m) = m[leftArm=ArmMove::Down()];
 BodyMove compile("arm", {"left", "forwards"} , BodyMove m) = m[leftArm=Forwards()];
-BodyMove compile("arm", {"left", "forwards", "up"} , BodyMove m) = m[leftArm=ForwardsUp()];
+//BodyMove compile("arm", {"left", "forwards", "up"} , BodyMove m) = m[leftArm=ForwardsUp()];
 BodyMove compile("arm", {"left", "forwards", "down"} , BodyMove m) = m[leftArm=ForwardsDown()];
 BodyMove compile("arm", {"left", "forwards", "up", "sideways"} , BodyMove m) = m[leftArm=ForwardsUpSideways()];
 BodyMove compile("arm", {"left", "forwards", "down", "sideways"} , BodyMove m) = m[leftArm=ForwardsDownSideways()];

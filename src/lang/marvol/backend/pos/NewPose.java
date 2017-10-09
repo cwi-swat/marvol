@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
@@ -242,7 +243,10 @@ public class NewPose {
 //		uttering.speak(speech);
 		try {
 			p.angleInterpolation(jointNames, angles(), times(seconds), true);
-		} catch (ExecutionException | InterruptedException e) {
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (CallError e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

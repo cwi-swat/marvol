@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import com.aldebaran.qi.Application;
+import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
@@ -43,7 +44,7 @@ public class DanceInterpreter {
 			times.add(1f);
 			
 			proxy.stiffnessInterpolation(parts, stiffness, times);
-		} catch (ExecutionException | InterruptedException e) {
+		} catch (InterruptedException | CallError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
